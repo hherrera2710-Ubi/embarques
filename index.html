@@ -752,7 +752,7 @@
             <div class="matriz-container">
                 <table class="table-matriz" id="matrizDbr">
                                         <thead>
-                        <tr><th style="background-color: var(--white); border: none;"></th><th style="background-color: var(--white); border: none;"></th><th>Surtido CDM</th><th>Consolidado</th><th>Embarque TU</th><th>Backup</th><th>Salida CDR</th><th>Tránsito TU</th></tr>
+                        <tr><th style="background-color: var(--white); border: none;"></th><th style="background-color: var(--white); border: none;"></th><th>Surtido CDM</th><th>Consolidado</th><th>Embarque TU</th><th>Backlog</th><th>Salida CDR</th><th>Tránsito TU</th></tr>
                         <tr>
                             <th>Destino</th>
                             <th>TU</th>
@@ -1273,7 +1273,7 @@
                     val.innerText = info.tu;
                     val.classList.remove('tu-flip'); void val.offsetWidth; val.classList.add('tu-flip');
                 }
-                if (lbl) lbl.innerText = info.total > 1 ? ('TU ' + info.pos + '/' + info.total) : 'TU';
+                if (lbl) lbl.innerText = 'TU ' + info.pos + '/' + info.total;
             });
             // CDM > CDR
             document.querySelectorAll('#matrizDbr tbody tr').forEach(fila => {
@@ -1284,7 +1284,7 @@
                     span.classList.remove('tu-flip'); void span.offsetWidth; span.classList.add('tu-flip');
                 }
                 const cnt = fila.querySelector('.tu-count');
-                if (cnt) cnt.innerText = info.total > 1 ? (info.pos + '/' + info.total) : '';
+                if (cnt) cnt.innerText = info.pos + '/' + info.total;
             });
         }
 
