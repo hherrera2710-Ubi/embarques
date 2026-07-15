@@ -798,7 +798,7 @@
                 <div class="res-section intro">
                     <div class="res-head"><div class="res-num">1</div><h3>Resumen ejecutivo</h3></div>
                     <p class="res-p">Se desarrollará un <strong>tablero único en formato monitor</strong> para desplegarse en pantallas físicas. El tablero integra <strong>cuatro pantallas operativas</strong> orientadas a distintas audiencias y zonas de la operación, con el fin de dar visibilidad en tiempo real al flujo de salida de mercancía: desde el embarque por puerta y los tiempos de carga, hasta los KPIs de calidad por destino.</p>
-                    <p class="res-p">Dos de las pantallas (Transportes, Timeline y CDM &gt; CDR) rotan en un <strong>carrusel automático</strong> (cada 6 segundos); las pantallas de <strong>Puertas</strong> son fijas por puerta y van en monitores verticales. En esta etapa la información es simulada/manual; el objetivo siguiente es conectarla progresivamente a los sistemas fuente (Ubictum Delivery, SAP EWM y Power BI).</p>
+                    <p class="res-p">Dos de las pantallas (Transportes, Timeline y CDM &gt; CDR) rotan en un <strong>carrusel automático</strong> (cada 6 segundos); las pantallas de <strong>Puertas</strong> son fijas por puerta y van en monitores verticales. En esta etapa la información es simulada/manual; el objetivo siguiente es conectarla progresivamente a los sistemas fuente (Ubictum Delivery y SAP EWM).</p>
                 </div>
 
                 <!-- 2. 3 pantallas en 3 zonas -->
@@ -870,17 +870,17 @@
                     </table>
 
                     <div class="res-map-title">3.4 Embarques / CDM &gt; CDR</div>
-                    <p class="res-map-desc">Matriz de calidad y salidas (DBR) por destino, con semáforo según objetivo. La primera fila (CDM) es la sumatoria/resumen general; debajo se desglosa por cada nodo (Norte, Sur, Puebla, Bajío, Guadalajara, Morelia, Culiacán, La Paz, Chihuahua, Tijuana, Monterrey, Veracruz, Tuxtla, Mérida).</p>
+                    <p class="res-map-desc">Matriz de calidad y salidas (DBR) por destino. Cada actividad muestra su % con icono de semáforo y el tiempo que tardó (en horas). La primera fila (CDM) funciona como total: suma las TU y las horas de los CDR y promedia sus porcentajes. Debajo se desglosa por nodo (México Norte, México Sur, Puebla, Bajío, Guadalajara, Morelia, Culiacán, La Paz, Chihuahua, Tijuana, Monterrey, Veracruz, Tuxtla, Mérida).</p>
                     <table class="res-table">
                         <tr><th>Campo</th><th>Origen (DATA)</th><th>KPI / Descripción</th></tr>
                         <tr><td class="c-campo">CDM / Destino</td><td><span class="src-badge src-ewm">SAP EWM</span></td><td class="c-desc">Identificador del nodo (CDM y CDR)</td></tr>
-                        <tr><td class="c-campo">Surtido CDM</td><td><span class="src-badge src-ewm">SAP EWM</span></td><td class="c-desc">% Fill rate (Obj. &gt; 99%)</td></tr>
-                        <tr><td class="c-campo">Consolidado</td><td><span class="src-badge src-ewm">SAP EWM</span></td><td class="c-desc">% Embalado a HU Master (Obj. &gt; 98%)</td></tr>
-                        <tr><td class="c-campo">Embarque TU</td><td><span class="src-badge src-ewm">SAP EWM</span></td><td class="c-desc">% Embarque a TU (Obj. 100%)</td></tr>
-                        <tr><td class="c-campo">Salida CDR</td><td><span class="src-badge src-ewm">SAP EWM</span></td><td class="c-desc">% Stage Resguardo (Obj. 0% — lógica invertida)</td></tr>
-                        <tr><td class="c-campo">Notificación CDR</td><td><span class="src-badge src-ud">Ubictum Delivery</span></td><td class="c-desc">% Salidas en Tiempo (Obj. 100%)</td></tr>
-                        <tr><td class="c-campo">Tránsito TU</td><td><span class="src-badge src-ud">Ubictum Delivery</span></td><td class="c-desc">% Llegadas a CDR en tiempo (Obj. 98%)</td></tr>
-                        <tr><td class="c-campo">Recibo CDR</td><td><span class="src-badge src-pbi">Power BI</span></td><td class="c-desc">% Recibido en CDR (Obj. 100%)</td></tr>
+                        <tr><td class="c-campo">TU</td><td><span class="src-badge src-ud">Ubictum Delivery</span></td><td class="c-desc">Unidad(es) de transporte del destino; un destino puede tener de 1 a N TU</td></tr>
+                        <tr><td class="c-campo">Surtido CDM</td><td><span class="src-badge src-ewm">SAP EWM</span></td><td class="c-desc">% Fill rate (Obj. &gt; 99%) + tiempo de la actividad</td></tr>
+                        <tr><td class="c-campo">Consolidado</td><td><span class="src-badge src-ewm">SAP EWM</span></td><td class="c-desc">% Embalado a HU Master (Obj. &gt; 98%) + tiempo de la actividad</td></tr>
+                        <tr><td class="c-campo">Embarque TU</td><td><span class="src-badge src-ewm">SAP EWM</span></td><td class="c-desc">% Embarque a TU (Obj. 100%) + tiempo de la actividad</td></tr>
+                        <tr><td class="c-campo">Backlog</td><td><span class="src-badge src-ewm">SAP EWM</span></td><td class="c-desc">% Stage Resguardo (Obj. 0% — lógica invertida) + tiempo de la actividad</td></tr>
+                        <tr><td class="c-campo">Salida CDR</td><td><span class="src-badge src-ud">Ubictum Delivery</span></td><td class="c-desc">Atributo: ¿salió a tiempo? (palomita / tache)</td></tr>
+                        <tr><td class="c-campo">Tránsito TU</td><td><span class="src-badge src-ud">Ubictum Delivery</span></td><td class="c-desc">Atributo: ¿llegó a tiempo? (palomita / tache)</td></tr>
                     </table>
                 </div>
 
@@ -890,14 +890,12 @@
                     <div class="res-legend">
                         <span class="src-badge src-ud">Ubictum Delivery</span>
                         <span class="src-badge src-ewm">SAP EWM</span>
-                        <span class="src-badge src-pbi">Power BI</span>
                         <span class="src-badge src-calc">Cálculo</span>
                     </div>
                     <table class="res-table">
                         <tr><th style="width:24%">Fuente</th><th>Qué aporta</th></tr>
-                        <tr><td><span class="src-badge src-ud">Ubictum Delivery</span></td><td class="c-desc">Fuente principal de la operación: datos de embarque, tiempos del timeline por CDR, notificación y tránsito. Origen de la mayoría de los campos.</td></tr>
-                        <tr><td><span class="src-badge src-ewm">SAP EWM</span></td><td class="c-desc">Sistema de almacén: avance de carga por RFID y, en CDM &gt; CDR, surtido, consolidado, embarque TU y salida CDR.</td></tr>
-                        <tr><td><span class="src-badge src-pbi">Power BI</span></td><td class="c-desc">Recibo CDR (% recibido en CDR), consolidado para el indicador de recepción.</td></tr>
+                        <tr><td><span class="src-badge src-ud">Ubictum Delivery</span></td><td class="c-desc">Fuente principal de la operación: datos de embarque, TU, tiempos del timeline por CDR, y los atributos de Salida CDR y Tránsito TU. Origen de la mayoría de los campos.</td></tr>
+                        <tr><td><span class="src-badge src-ewm">SAP EWM</span></td><td class="c-desc">Sistema de almacén: pantalla de Puertas (HU's por RFID) y, en CDM &gt; CDR, surtido, consolidado, embarque TU y backlog.</td></tr>
                         <tr><td><span class="src-badge src-calc">Cálculo</span></td><td class="c-desc">Campos derivados dentro del tablero: tiempo de carga (Fin − Inicio) y el estatus tipo aeropuerto del timeline.</td></tr>
                     </table>
                     <p class="res-p" style="margin-top:12px;"><strong>Estado actual de la data y ruta de automatización:</strong> hoy la información se captura de forma manual/simulada para validar el tablero. La automatización se hará por fases, conforme se conecte cada fuente:</p>
@@ -905,7 +903,7 @@
                         <li>Llegadas a CDM y CDR.</li>
                         <li>Surtido y consolidado directamente desde sistema (SAP EWM).</li>
                         <li>Carga de la TU por frecuencia / lectura automática.</li>
-                        <li>Recepción en destino (Recibo CDR) consolidada vía Power BI.</li>
+                        <li>Confirmación de HU's por RFID en la pantalla de Puertas.</li>
                     </ul>
                 </div>
 
@@ -925,7 +923,7 @@
                         <div class="res-box pend">
                             <h4>◷ Qué falta para producción</h4>
                             <ul class="res-list num">
-                                <li>Conexión a las fuentes (Ubictum Delivery, SAP EWM, Power BI) y definición de la frecuencia de actualización.</li>
+                                <li>Conexión a las fuentes (Ubictum Delivery y SAP EWM) y definición de la frecuencia de actualización.</li>
                                 <li>Hosting/despliegue en las pantallas de las zonas (incluyendo monitores verticales) y políticas de visualización.</li>
                                 <li>Validación de orígenes por campo con los responsables de cada sistema.</li>
                             </ul>
@@ -949,7 +947,6 @@
                     <span>Origen del dato (DATA):</span>
                     <span><span class="arq-badge badge-ud">UBICTUM DELIVERY</span></span>
                     <span><span class="arq-badge badge-ewm">SAP EWM</span></span>
-                    <span><span class="arq-badge badge-pbi">POWER BI</span></span>
                 </div>
 
                 <!-- Pantalla 1: Embarques / Transportes -->
@@ -1056,35 +1053,35 @@
                             <tr class="arq-row-data">
                                 <th class="arq-rowlabel">DATA</th>
                                 <td><span class="arq-badge badge-ewm">SAP EWM</span></td>
+                                <td><span class="arq-badge badge-ud">UBICTUM DELIVERY</span></td>
                                 <td><span class="arq-badge badge-ewm">SAP EWM</span></td>
                                 <td><span class="arq-badge badge-ewm">SAP EWM</span></td>
                                 <td><span class="arq-badge badge-ewm">SAP EWM</span></td>
                                 <td><span class="arq-badge badge-ewm">SAP EWM</span></td>
                                 <td><span class="arq-badge badge-ud">UBICTUM DELIVERY</span></td>
                                 <td><span class="arq-badge badge-ud">UBICTUM DELIVERY</span></td>
-                                <td><span class="arq-badge badge-pbi">POWER BI</span></td>
                             </tr>
                             <tr class="arq-row-campo">
                                 <th class="arq-rowlabel">Campo</th>
                                 <td>CDM / Destino</td>
+                                <td>TU</td>
                                 <td>Surtido CDM</td>
                                 <td>Consolidado</td>
                                 <td>Embarque TU</td>
+                                <td>Backlog</td>
                                 <td>Salida CDR</td>
-                                <td>Notificación CDR</td>
                                 <td>Tránsito TU</td>
-                                <td>Recibo CDR</td>
                             </tr>
                             <tr class="arq-row-kpi">
                                 <th class="arq-rowlabel">KPI</th>
                                 <td>—</td>
-                                <td>% Fill rate</td>
-                                <td>% Embalado a HU Master</td>
-                                <td>% Embarque TU</td>
-                                <td>% Stage Resguardo</td>
-                                <td>% Salidas en Tiempo</td>
-                                <td>% Llegadas a CDR en tiempo</td>
-                                <td>% Recibido en CDR</td>
+                                <td>1 a N TU por destino</td>
+                                <td>% Fill rate + tiempo</td>
+                                <td>% Embalado a HU Master + tiempo</td>
+                                <td>% Embarque TU + tiempo</td>
+                                <td>% Stage Resguardo + tiempo</td>
+                                <td>¿Salió a tiempo? (sí / no)</td>
+                                <td>¿Llegó a tiempo? (sí / no)</td>
                             </tr>
                         </table>
                     </div>
