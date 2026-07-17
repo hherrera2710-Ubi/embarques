@@ -219,6 +219,10 @@
             letter-spacing: 0.3px;
         }
         .table-matriz thead tr:nth-child(1) th:first-child { background: transparent; }
+        .table-matriz thead tr:nth-child(1) th.th-tu    { background: #ffffff; color: #000000; border-top-left-radius: 10px; }
+        .table-matriz thead tr:nth-child(1) th.th-teal2 { background: #54a4b3; }
+        .table-matriz thead tr:nth-child(1) th.th-gray2 { background: #636469; }
+        .table-matriz thead tr:nth-child(1) th.th-black { background: #000000; }
         .table-matriz thead tr:nth-child(1) th:nth-child(2) { border-top-left-radius: 10px; }
         .table-matriz thead tr:nth-child(1) th:last-child { border-top-right-radius: 10px; }
 
@@ -268,6 +272,7 @@
         .mx-ic { width: 16px; height: 16px; flex-shrink: 0; display: inline-block; }
         .mx-val { font-weight: 800; font-size: 19px; color: #2c2c2c; font-family: 'Consolas','Courier New',monospace; }
         .mx-time { font-size: 12px; color: #5b6470; font-weight: 700; }
+        .mx-pzas { font-size: 12px; color: #5b6470; font-weight: 700; white-space: nowrap; }
         .row-cdm .mx-val { font-size: 19.5px; }
         .mx-cell.attr .mx-ic { width: 21px; height: 21px; }
         .mx-empty { color: #cbd2da; font-size: 17px; font-weight: 700; }
@@ -752,10 +757,10 @@
             <div class="matriz-container">
                 <table class="table-matriz" id="matrizDbr">
                                         <thead>
-                        <tr><th style="background-color: var(--white); border: none;"></th><th style="background-color: var(--white); border: none;"></th><th>Surtido CDM</th><th>Consolidado</th><th>Embarque TU</th><th>Backlog</th><th>Salida CDR</th><th>Tránsito TU</th></tr>
+                        <tr><th style="background-color: var(--white); border: none;"></th><th class="th-tu">TU</th><th class="th-teal2">Surtido CDM</th><th class="th-teal2">Consolidado</th><th class="th-gray2">Embarque TU</th><th class="th-gray2">Backlog</th><th class="th-black">Salida CDR</th><th class="th-black">Tránsito TU</th></tr>
                         <tr>
                             <th>Destino</th>
-                            <th>TU</th>
+                            <th></th>
                             <th>% Fill rate<br><span class="objetivo-label">Obj: &gt; 99%</span></th>
                             <th>% Embalado a HU<br><span class="objetivo-label">Obj: &gt; 98%</span></th>
                             <th>% Embarque a TU<br><span class="objetivo-label">Obj: 100%</span></th>
@@ -870,18 +875,19 @@
                     </table>
 
                     <div class="res-map-title">3.4 Embarques / CDM &gt; CDR</div>
-                    <p class="res-map-desc">Matriz de calidad y salidas (DBR) por destino. Cada actividad muestra su % con icono de semáforo y el tiempo que tardó (en horas). La primera fila (CDM) funciona como total: suma las TU y las horas de los CDR y promedia sus porcentajes. Debajo se desglosa por nodo (México Norte, México Sur, Puebla, Bajío, Guadalajara, Morelia, Culiacán, La Paz, Chihuahua, Tijuana, Monterrey, Veracruz, Tuxtla, Mérida).</p>
+                    <p class="res-map-desc">Matriz de calidad y salidas (DBR) por destino. Cada actividad muestra su % con icono de semáforo y el tiempo que tardó (en horas). <strong>Base de cálculo:</strong> Surtido CDM y Consolidado se calculan sobre el total de piezas surtidas (la merma de cada proceso baja el %); Embarque TU y Backlog se calculan sobre las piezas ya consolidadas. La primera fila (CDM) funciona como total: suma las TU y las horas de los CDR y promedia sus porcentajes. Debajo se desglosa por nodo (México Norte, México Sur, Puebla, Bajío, Guadalajara, Morelia, Culiacán, La Paz, Chihuahua, Tijuana, Monterrey, Veracruz, Tuxtla, Mérida).</p>
                     <table class="res-table">
                         <tr><th>Campo</th><th>Origen (DATA)</th><th>KPI / Descripción</th></tr>
                         <tr><td class="c-campo">CDM / Destino</td><td><span class="src-badge src-ewm">SAP EWM</span></td><td class="c-desc">Identificador del nodo (CDM y CDR)</td></tr>
-                        <tr><td class="c-campo">TU</td><td><span class="src-badge src-ud">Ubictum Delivery</span></td><td class="c-desc">Unidad(es) de transporte del destino; un destino puede tener de 1 a N TU</td></tr>
-                        <tr><td class="c-campo">Surtido CDM</td><td><span class="src-badge src-ewm">SAP EWM</span></td><td class="c-desc">% Fill rate (Obj. &gt; 99%) + tiempo de la actividad</td></tr>
-                        <tr><td class="c-campo">Consolidado</td><td><span class="src-badge src-ewm">SAP EWM</span></td><td class="c-desc">% Embalado a HU Master (Obj. &gt; 98%) + tiempo de la actividad</td></tr>
-                        <tr><td class="c-campo">Embarque TU</td><td><span class="src-badge src-ewm">SAP EWM</span></td><td class="c-desc">% Embarque a TU (Obj. 100%) + tiempo de la actividad</td></tr>
-                        <tr><td class="c-campo">Backlog</td><td><span class="src-badge src-ewm">SAP EWM</span></td><td class="c-desc">% Stage Resguardo (Obj. 0% — lógica invertida) + tiempo de la actividad</td></tr>
+                        <tr><td class="c-campo">TU</td><td><span class="src-badge src-ud">Ubictum Delivery</span></td><td class="c-desc">Unidad(es) de transporte del destino; un destino puede tener de 1 a N TU. Incluye las piezas totales del destino</td></tr>
+                        <tr><td class="c-campo">Surtido CDM</td><td><span class="src-badge src-ewm">SAP EWM</span></td><td class="c-desc">% Fill rate (Obj. &gt; 99%) sobre el total de piezas surtidas + tiempo + piezas</td></tr>
+                        <tr><td class="c-campo">Consolidado</td><td><span class="src-badge src-ewm">SAP EWM</span></td><td class="c-desc">% Embalado a HU Master (Obj. &gt; 98%) sobre el total de piezas surtidas + tiempo + piezas</td></tr>
+                        <tr><td class="c-campo">Embarque TU</td><td><span class="src-badge src-ewm">SAP EWM</span></td><td class="c-desc">% Embarque a TU (Obj. 100%) sobre las piezas consolidadas + tiempo + piezas</td></tr>
+                        <tr><td class="c-campo">Backlog</td><td><span class="src-badge src-ewm">SAP EWM</span></td><td class="c-desc">% Stage Resguardo (Obj. 0% — lógica invertida) sobre las piezas consolidadas + piezas (sin tiempo)</td></tr>
                         <tr><td class="c-campo">Salida CDR</td><td><span class="src-badge src-ud">Ubictum Delivery</span></td><td class="c-desc">Atributo: ¿salió a tiempo? (palomita / tache)</td></tr>
                         <tr><td class="c-campo">Tránsito TU</td><td><span class="src-badge src-ud">Ubictum Delivery</span></td><td class="c-desc">Atributo: ¿llegó a tiempo? (palomita / tache)</td></tr>
                     </table>
+                    <p class="res-p" style="font-size:12.5px; color:#555; margin-top:6px;"><strong>Ejemplo (México Norte):</strong> de 10,000 piezas surtidas → Surtido CDM 99% = 9,900 pzas; Consolidado 98% = 9,800 pzas; sobre esas 9,800 consolidadas → Embarque TU 92% = 9,016 pzas y Backlog 8% = 784 pzas.</p>
                 </div>
 
                 <!-- 4. Orígenes -->
@@ -1075,11 +1081,11 @@
                             <tr class="arq-row-kpi">
                                 <th class="arq-rowlabel">KPI</th>
                                 <td>—</td>
-                                <td>1 a N TU por destino</td>
-                                <td>% Fill rate + tiempo</td>
-                                <td>% Embalado a HU Master + tiempo</td>
-                                <td>% Embarque TU + tiempo</td>
-                                <td>% Stage Resguardo + tiempo</td>
+                                <td>1 a N TU + piezas del destino</td>
+                                <td>% Fill rate (sobre piezas surtidas) + tiempo + pzas</td>
+                                <td>% Embalado a HU Master (sobre piezas surtidas) + tiempo + pzas</td>
+                                <td>% Embarque TU (sobre piezas consolidadas) + tiempo + pzas</td>
+                                <td>% Stage Resguardo (sobre piezas consolidadas) + pzas</td>
                                 <td>¿Salió a tiempo? (sí / no)</td>
                                 <td>¿Llegó a tiempo? (sí / no)</td>
                             </tr>
@@ -1281,7 +1287,10 @@
                     span.classList.remove('tu-flip'); void span.offsetWidth; span.classList.add('tu-flip');
                 }
                 const cnt = fila.querySelector('.tu-count');
-                if (cnt) cnt.innerText = info.pos + '/' + info.total;
+                if (cnt) {
+                    const dd = cdmDatos[fila.dataset.dest];
+                    cnt.innerText = info.pos + '/' + info.total + ((dd && dd.pzas) ? ('  -  ' + dd.pzas.toLocaleString('en-US') + ' pzas') : '');
+                }
             });
         }
 
@@ -1363,7 +1372,7 @@
         // MOTOR CDM > CDR (iconos + % + tiempo, atributos, dinámico)
         // ==========================================
         const cdmDatos = {
-            "MEXICO NORTE":{s:90,c:88,e:86,r:14,n:false,t:false},
+            "MEXICO NORTE":{s:99,c:98,e:92,r:8,n:false,t:false, pzas:10000, hrs:{surtido:3.5, consolidado:2.5, embarque:2.5}},
             "MEXICO SUR":{s:100,c:100,e:100,r:0,n:true,t:true}, "PUEBLA":{s:98,c:97,e:96,r:4,n:true,t:true},
             "BAJIO":{s:99,c:99,e:98,r:2,n:true,t:true},  "GUADALAJARA":{s:97,c:95,e:94,r:6,n:true,t:true},
             "MORELIA":{s:99,c:99,e:98,r:2,n:true,t:true},"CULIACAN":{s:100,c:100,e:100,r:0,n:true,t:true},
@@ -1411,11 +1420,25 @@
         function horasDe(col, i, dest) {
             if (dest === 'CDM') {
                 let suma = 0;
-                for (let k = 1; k <= 14; k++) suma += durCol(col, k);
+                for (let k = 1; k <= 14; k++) suma += horasDe(col, k, null);
                 return suma;
             }
+            const d = cdmDatos[dest];
+            if (d && d.hrs && d.hrs[col] !== undefined) return d.hrs[col];
             return durCol(col, i);
         }
+        // Piezas por actividad: Surtido y Consolidado sobre el total surtido;
+        // Embarque TU y Backlog sobre lo Consolidado.
+        function piezasDe(d, col) {
+            if (!d || !d.pzas) return null;
+            const consolidadas = Math.round(d.pzas * d.c / 100);
+            if (col === 'surtido')     return Math.round(d.pzas * d.s / 100);
+            if (col === 'consolidado') return consolidadas;
+            if (col === 'embarque')    return Math.round(consolidadas * d.e / 100);
+            if (col === 'salida')      return Math.round(consolidadas * d.r / 100);
+            return null;
+        }
+        function fmtNum(n) { return n.toLocaleString('en-US'); }
 
         function pintarCDM() {
             const filas = document.querySelectorAll('#matrizDbr tbody tr');
@@ -1434,7 +1457,12 @@
                     } else {
                         const val = col==='surtido'?d.s : col==='consolidado'?d.c : col==='embarque'?d.e : d.r;
                         const st = statusPct(col, val);
-                        celda.innerHTML = '<span class="mx-cell">'+icoStatus(st)+'<span class="mx-val">'+val+'%</span><span class="mx-time">'+fmtHoras(horasDe(col,i,dest))+'</span></span>';
+                        let html = '<span class="mx-cell">'+icoStatus(st)+'<span class="mx-val">'+val+'%</span>';
+                        if (col !== 'salida') html += '<span class="mx-time">'+fmtHoras(horasDe(col,i,dest))+'</span>'; // Backlog sin horas
+                        const pz = piezasDe(d, col);
+                        if (pz !== null) html += '<span class="mx-pzas">- '+fmtNum(pz)+' pzas</span>';
+                        html += '</span>';
+                        celda.innerHTML = html;
                     }
                 });
             });
