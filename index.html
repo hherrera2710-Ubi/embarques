@@ -103,6 +103,47 @@
         /* ==========================================
            VISTA 2: FACILITADORES (TARJETAS HORIZONTALES)
            ========================================== */
+        /* ---- TABLA TIMELINE PAGINADA (registro por TU, agrupado por CDR) ---- */
+        .tl-table-wrap { flex: 1; min-height: 0; overflow: hidden; width: 100%; background: var(--white); border-radius: 12px; border: 1px solid #e8edf3; box-shadow: 0 4px 14px rgba(30,58,138,0.06); padding: 6px 14px; }
+        .tl-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+        .tl-table td { padding: 4px 8px; text-align: center; font-size: 15px; vertical-align: middle; }
+        .tl-table td:nth-child(1) { width: 150px; }
+        .tl-table td:nth-child(2) { width: 195px; }
+
+        /* Fila de grupo (CDR + objetivos) */
+        .tl-group td { border-top: 2px solid #e3e8f2; background: #f7f9fc; padding-top: 5px; padding-bottom: 5px; }
+        .tl-group .tl-cdrname { text-align: left !important; font-weight: 800; color: var(--ubictum-blue-dark); font-size: 16px; padding-left: 12px !important; }
+        .tl-group .tl-cdr { text-align: left; line-height: 1.15; }
+        .tl-group .tl-cdr .tl-tucount { color: var(--ubictum-teal); font-size: 13px; font-weight: 800; }
+        .tl-group .tl-cdr .tl-tunum { margin-left: 10px; }
+        .tl-group .tl-cdr .tl-objtag { display: block; font-size: 11px; font-weight: 800; color: #d84315; margin-bottom: 1px; }
+        .tl-objh { font-size: 14px; font-weight: 800; color: var(--ubictum-blue-dark); font-family: 'Consolas','Courier New',monospace; line-height: 1.1; }
+        .tl-objh .tl-colh { display: block; font-size: 10px; font-weight: 800; color: #111; text-transform: uppercase; letter-spacing: 0.3px; margin-top: 2px; font-family: 'Segoe UI', sans-serif; }
+
+        /* Filas de TU */
+        .tl-row td { border-bottom: 1px solid #f1f3f7; }
+        .tl-row:hover td { background: #f6f9fd; }
+        .tl-tu { text-align: right !important; font-weight: 800; color: var(--sap-blue); font-family: 'Consolas','Courier New',monospace; font-size: 15px; padding-right: 18px !important; }
+        .tl-cellval { display: inline-flex; align-items: center; justify-content: center; gap: 5px; }
+        .tl-time { font-weight: 800; color: #2c2c2c; font-family: 'Consolas','Courier New',monospace; }
+        .tl-ic { width: 14px; height: 14px; display: inline-block; flex-shrink: 0; }
+        .tl-tiempo { color: #d84315; font-weight: 800; font-family: 'Consolas','Courier New',monospace; }
+        .tl-empty { color: #cbd2da; font-weight: 700; }
+
+        /* Chip de estatus por TU */
+        .tl-est { display: inline-block; padding: 3px 9px; border-radius: 5px; font-size: 10.5px; font-weight: 800; color: #fff; font-family: 'Consolas','Courier New',monospace; letter-spacing: 0.3px; white-space: nowrap; }
+        .est-tiempo { background: var(--success-green); }
+        .est-retrasado { background: var(--alert-red); }
+        .est-riesgo { background: var(--alert-orange); }
+        .est-proceso { background: var(--sap-blue); }
+        .est-programado { background: #8c97a3; }
+
+        /* Paginador */
+        .tl-pager { flex-shrink: 0; display: flex; align-items: center; justify-content: center; gap: 20px; padding: 12px 0 2px; }
+        .tl-pgbtn { background: var(--ubictum-blue-dark); color: #fff; border: none; padding: 9px 22px; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; transition: 0.2s; }
+        .tl-pgbtn:hover { background: #16296b; }
+        .tl-page-info { font-size: 15px; font-weight: 800; color: var(--ubictum-gray); min-width: 120px; text-align: center; }
+
         .facilitadores-grid {
             display: flex;
             flex-direction: column;
@@ -533,217 +574,16 @@
                 <h2 class="view-title">Timeline</h2>
             </div>
 
-            <div class="facilitadores-grid" id="grid-facilitadores">
-                <div class="cdr-card" data-cdr="MEXICO NORTE" data-tu="39907" data-obj-arribo="01:00" data-obj-inicio="01:50" data-obj-fin="04:20" data-obj-doc="05:20" data-obj-salida="06:00">
-                    <div class="cdr-card-header">
-                        <div class="cdr-id"><span class="cdr-name">MEXICO NORTE</span></div>
-                        <div class="cdr-tucol"><span class="cdr-tucol-lbl">TU</span><span class="cdr-tucol-val">39907</span></div>
-                        <div class="cdr-status-bar"></div>
-                    </div>
-                    <div class="cdr-card-body">
-                        <div class="cdr-field" data-act="arribo"><div class="cdr-field-label">Arribo Unidad</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field" data-act="inicio"><div class="cdr-field-label">Inicio Carga</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field" data-act="fin"><div class="cdr-field-label">Fin Carga</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field field-calc" data-act="tiempo"><div class="cdr-field-label">Tiempo Carga</div><div class="cdr-field-value valor-tiempo-carga"></div></div>
-                        <div class="cdr-field" data-act="doc"><div class="cdr-field-label">Documentos</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field field-salida" data-act="salida"><div class="cdr-field-label">Salida</div><div class="cdr-field-value"></div></div>
-                    </div>
-                </div>
-                <div class="cdr-card" data-cdr="MEXICO SUR" data-tu="39899" data-obj-arribo="00:00" data-obj-inicio="00:50" data-obj-fin="03:20" data-obj-doc="04:20" data-obj-salida="05:00">
-                    <div class="cdr-card-header">
-                        <div class="cdr-id"><span class="cdr-name">MEXICO SUR</span></div>
-                        <div class="cdr-tucol"><span class="cdr-tucol-lbl">TU</span><span class="cdr-tucol-val">39899</span></div>
-                        <div class="cdr-status-bar"></div>
-                    </div>
-                    <div class="cdr-card-body">
-                        <div class="cdr-field" data-act="arribo"><div class="cdr-field-label">Arribo Unidad</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field" data-act="inicio"><div class="cdr-field-label">Inicio Carga</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field" data-act="fin"><div class="cdr-field-label">Fin Carga</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field field-calc" data-act="tiempo"><div class="cdr-field-label">Tiempo Carga</div><div class="cdr-field-value valor-tiempo-carga"></div></div>
-                        <div class="cdr-field" data-act="doc"><div class="cdr-field-label">Documentos</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field field-salida" data-act="salida"><div class="cdr-field-label">Salida</div><div class="cdr-field-value"></div></div>
-                    </div>
-                </div>
-                <div class="cdr-card" data-cdr="PUEBLA" data-tu="39866" data-obj-arribo="00:00" data-obj-inicio="00:50" data-obj-fin="03:20" data-obj-doc="04:20" data-obj-salida="05:00">
-                    <div class="cdr-card-header">
-                        <div class="cdr-id"><span class="cdr-name">PUEBLA</span></div>
-                        <div class="cdr-tucol"><span class="cdr-tucol-lbl">TU</span><span class="cdr-tucol-val">39866</span></div>
-                        <div class="cdr-status-bar"></div>
-                    </div>
-                    <div class="cdr-card-body">
-                        <div class="cdr-field" data-act="arribo"><div class="cdr-field-label">Arribo Unidad</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field" data-act="inicio"><div class="cdr-field-label">Inicio Carga</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field" data-act="fin"><div class="cdr-field-label">Fin Carga</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field field-calc" data-act="tiempo"><div class="cdr-field-label">Tiempo Carga</div><div class="cdr-field-value valor-tiempo-carga"></div></div>
-                        <div class="cdr-field" data-act="doc"><div class="cdr-field-label">Documentos</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field field-salida" data-act="salida"><div class="cdr-field-label">Salida</div><div class="cdr-field-value"></div></div>
-                    </div>
-                </div>
-                <div class="cdr-card" data-cdr="BAJIO" data-tu="39940" data-obj-arribo="10:00" data-obj-inicio="10:50" data-obj-fin="13:20" data-obj-doc="14:20" data-obj-salida="15:00">
-                    <div class="cdr-card-header">
-                        <div class="cdr-id"><span class="cdr-name">BAJIO</span></div>
-                        <div class="cdr-tucol"><span class="cdr-tucol-lbl">TU</span><span class="cdr-tucol-val">39940</span></div>
-                        <div class="cdr-status-bar"></div>
-                    </div>
-                    <div class="cdr-card-body">
-                        <div class="cdr-field" data-act="arribo"><div class="cdr-field-label">Arribo Unidad</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field" data-act="inicio"><div class="cdr-field-label">Inicio Carga</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field" data-act="fin"><div class="cdr-field-label">Fin Carga</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field field-calc" data-act="tiempo"><div class="cdr-field-label">Tiempo Carga</div><div class="cdr-field-value valor-tiempo-carga"></div></div>
-                        <div class="cdr-field" data-act="doc"><div class="cdr-field-label">Documentos</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field field-salida" data-act="salida"><div class="cdr-field-label">Salida</div><div class="cdr-field-value"></div></div>
-                    </div>
-                </div>
-                <div class="cdr-card" data-cdr="GUADALAJARA" data-tu="39945" data-obj-arribo="10:00" data-obj-inicio="10:50" data-obj-fin="13:20" data-obj-doc="14:20" data-obj-salida="15:00">
-                    <div class="cdr-card-header">
-                        <div class="cdr-id"><span class="cdr-name">GUADALAJARA</span></div>
-                        <div class="cdr-tucol"><span class="cdr-tucol-lbl">TU</span><span class="cdr-tucol-val">39945</span></div>
-                        <div class="cdr-status-bar"></div>
-                    </div>
-                    <div class="cdr-card-body">
-                        <div class="cdr-field" data-act="arribo"><div class="cdr-field-label">Arribo Unidad</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field" data-act="inicio"><div class="cdr-field-label">Inicio Carga</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field" data-act="fin"><div class="cdr-field-label">Fin Carga</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field field-calc" data-act="tiempo"><div class="cdr-field-label">Tiempo Carga</div><div class="cdr-field-value valor-tiempo-carga"></div></div>
-                        <div class="cdr-field" data-act="doc"><div class="cdr-field-label">Documentos</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field field-salida" data-act="salida"><div class="cdr-field-label">Salida</div><div class="cdr-field-value"></div></div>
-                    </div>
-                </div>
-                <div class="cdr-card" data-cdr="MORELIA" data-tu="39909" data-obj-arribo="00:00" data-obj-inicio="00:50" data-obj-fin="03:20" data-obj-doc="04:20" data-obj-salida="05:30">
-                    <div class="cdr-card-header">
-                        <div class="cdr-id"><span class="cdr-name">MORELIA</span></div>
-                        <div class="cdr-tucol"><span class="cdr-tucol-lbl">TU</span><span class="cdr-tucol-val">39909</span></div>
-                        <div class="cdr-status-bar"></div>
-                    </div>
-                    <div class="cdr-card-body">
-                        <div class="cdr-field" data-act="arribo"><div class="cdr-field-label">Arribo Unidad</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field" data-act="inicio"><div class="cdr-field-label">Inicio Carga</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field" data-act="fin"><div class="cdr-field-label">Fin Carga</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field field-calc" data-act="tiempo"><div class="cdr-field-label">Tiempo Carga</div><div class="cdr-field-value valor-tiempo-carga"></div></div>
-                        <div class="cdr-field" data-act="doc"><div class="cdr-field-label">Documentos</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field field-salida" data-act="salida"><div class="cdr-field-label">Salida</div><div class="cdr-field-value"></div></div>
-                    </div>
-                </div>
-                <div class="cdr-card" data-cdr="CULIACAN" data-tu="39935" data-obj-arribo="08:00" data-obj-inicio="08:50" data-obj-fin="11:20" data-obj-doc="12:20" data-obj-salida="13:00">
-                    <div class="cdr-card-header">
-                        <div class="cdr-id"><span class="cdr-name">CULIACAN</span></div>
-                        <div class="cdr-tucol"><span class="cdr-tucol-lbl">TU</span><span class="cdr-tucol-val">39935</span></div>
-                        <div class="cdr-status-bar"></div>
-                    </div>
-                    <div class="cdr-card-body">
-                        <div class="cdr-field" data-act="arribo"><div class="cdr-field-label">Arribo Unidad</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field" data-act="inicio"><div class="cdr-field-label">Inicio Carga</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field" data-act="fin"><div class="cdr-field-label">Fin Carga</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field field-calc" data-act="tiempo"><div class="cdr-field-label">Tiempo Carga</div><div class="cdr-field-value valor-tiempo-carga"></div></div>
-                        <div class="cdr-field" data-act="doc"><div class="cdr-field-label">Documentos</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field field-salida" data-act="salida"><div class="cdr-field-label">Salida</div><div class="cdr-field-value"></div></div>
-                    </div>
-                </div>
-                <div class="cdr-card" data-cdr="LA PAZ" data-tu="39920" data-obj-arribo="05:00" data-obj-inicio="05:50" data-obj-fin="08:20" data-obj-doc="09:20" data-obj-salida="10:00">
-                    <div class="cdr-card-header">
-                        <div class="cdr-id"><span class="cdr-name">LA PAZ</span></div>
-                        <div class="cdr-tucol"><span class="cdr-tucol-lbl">TU</span><span class="cdr-tucol-val">39920</span></div>
-                        <div class="cdr-status-bar"></div>
-                    </div>
-                    <div class="cdr-card-body">
-                        <div class="cdr-field" data-act="arribo"><div class="cdr-field-label">Arribo Unidad</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field" data-act="inicio"><div class="cdr-field-label">Inicio Carga</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field" data-act="fin"><div class="cdr-field-label">Fin Carga</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field field-calc" data-act="tiempo"><div class="cdr-field-label">Tiempo Carga</div><div class="cdr-field-value valor-tiempo-carga"></div></div>
-                        <div class="cdr-field" data-act="doc"><div class="cdr-field-label">Documentos</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field field-salida" data-act="salida"><div class="cdr-field-label">Salida</div><div class="cdr-field-value"></div></div>
-                    </div>
-                </div>
-                <div class="cdr-card" data-cdr="CHIHUAHUA" data-tu="39912" data-obj-arribo="01:00" data-obj-inicio="01:50" data-obj-fin="04:20" data-obj-doc="05:20" data-obj-salida="06:00">
-                    <div class="cdr-card-header">
-                        <div class="cdr-id"><span class="cdr-name">CHIHUAHUA</span></div>
-                        <div class="cdr-tucol"><span class="cdr-tucol-lbl">TU</span><span class="cdr-tucol-val">39912</span></div>
-                        <div class="cdr-status-bar"></div>
-                    </div>
-                    <div class="cdr-card-body">
-                        <div class="cdr-field" data-act="arribo"><div class="cdr-field-label">Arribo Unidad</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field" data-act="inicio"><div class="cdr-field-label">Inicio Carga</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field" data-act="fin"><div class="cdr-field-label">Fin Carga</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field field-calc" data-act="tiempo"><div class="cdr-field-label">Tiempo Carga</div><div class="cdr-field-value valor-tiempo-carga"></div></div>
-                        <div class="cdr-field" data-act="doc"><div class="cdr-field-label">Documentos</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field field-salida" data-act="salida"><div class="cdr-field-label">Salida</div><div class="cdr-field-value"></div></div>
-                    </div>
-                </div>
-                <div class="cdr-card" data-cdr="TIJUANA" data-tu="39915" data-obj-arribo="01:00" data-obj-inicio="01:50" data-obj-fin="04:20" data-obj-doc="05:20" data-obj-salida="06:00">
-                    <div class="cdr-card-header">
-                        <div class="cdr-id"><span class="cdr-name">TIJUANA</span></div>
-                        <div class="cdr-tucol"><span class="cdr-tucol-lbl">TU</span><span class="cdr-tucol-val">39915</span></div>
-                        <div class="cdr-status-bar"></div>
-                    </div>
-                    <div class="cdr-card-body">
-                        <div class="cdr-field" data-act="arribo"><div class="cdr-field-label">Arribo Unidad</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field" data-act="inicio"><div class="cdr-field-label">Inicio Carga</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field" data-act="fin"><div class="cdr-field-label">Fin Carga</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field field-calc" data-act="tiempo"><div class="cdr-field-label">Tiempo Carga</div><div class="cdr-field-value valor-tiempo-carga"></div></div>
-                        <div class="cdr-field" data-act="doc"><div class="cdr-field-label">Documentos</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field field-salida" data-act="salida"><div class="cdr-field-label">Salida</div><div class="cdr-field-value"></div></div>
-                    </div>
-                </div>
-                <div class="cdr-card" data-cdr="MONTERREY" data-tu="39821" data-obj-arribo="05:00" data-obj-inicio="05:50" data-obj-fin="08:20" data-obj-doc="09:20" data-obj-salida="10:00">
-                    <div class="cdr-card-header">
-                        <div class="cdr-id"><span class="cdr-name">MONTERREY</span></div>
-                        <div class="cdr-tucol"><span class="cdr-tucol-lbl">TU</span><span class="cdr-tucol-val">39821</span></div>
-                        <div class="cdr-status-bar"></div>
-                    </div>
-                    <div class="cdr-card-body">
-                        <div class="cdr-field" data-act="arribo"><div class="cdr-field-label">Arribo Unidad</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field" data-act="inicio"><div class="cdr-field-label">Inicio Carga</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field" data-act="fin"><div class="cdr-field-label">Fin Carga</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field field-calc" data-act="tiempo"><div class="cdr-field-label">Tiempo Carga</div><div class="cdr-field-value valor-tiempo-carga"></div></div>
-                        <div class="cdr-field" data-act="doc"><div class="cdr-field-label">Documentos</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field field-salida" data-act="salida"><div class="cdr-field-label">Salida</div><div class="cdr-field-value"></div></div>
-                    </div>
-                </div>
-                <div class="cdr-card" data-cdr="VERACRUZ" data-tu="39825" data-obj-arribo="06:00" data-obj-inicio="06:50" data-obj-fin="09:20" data-obj-doc="10:20" data-obj-salida="11:00">
-                    <div class="cdr-card-header">
-                        <div class="cdr-id"><span class="cdr-name">VERACRUZ</span></div>
-                        <div class="cdr-tucol"><span class="cdr-tucol-lbl">TU</span><span class="cdr-tucol-val">39825</span></div>
-                        <div class="cdr-status-bar"></div>
-                    </div>
-                    <div class="cdr-card-body">
-                        <div class="cdr-field" data-act="arribo"><div class="cdr-field-label">Arribo Unidad</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field" data-act="inicio"><div class="cdr-field-label">Inicio Carga</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field" data-act="fin"><div class="cdr-field-label">Fin Carga</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field field-calc" data-act="tiempo"><div class="cdr-field-label">Tiempo Carga</div><div class="cdr-field-value valor-tiempo-carga"></div></div>
-                        <div class="cdr-field" data-act="doc"><div class="cdr-field-label">Documentos</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field field-salida" data-act="salida"><div class="cdr-field-label">Salida</div><div class="cdr-field-value"></div></div>
-                    </div>
-                </div>
-                <div class="cdr-card" data-cdr="TUXTLA" data-tu="39824" data-obj-arribo="06:00" data-obj-inicio="06:50" data-obj-fin="09:20" data-obj-doc="10:20" data-obj-salida="11:00">
-                    <div class="cdr-card-header">
-                        <div class="cdr-id"><span class="cdr-name">TUXTLA</span></div>
-                        <div class="cdr-tucol"><span class="cdr-tucol-lbl">TU</span><span class="cdr-tucol-val">39824</span></div>
-                        <div class="cdr-status-bar"></div>
-                    </div>
-                    <div class="cdr-card-body">
-                        <div class="cdr-field" data-act="arribo"><div class="cdr-field-label">Arribo Unidad</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field" data-act="inicio"><div class="cdr-field-label">Inicio Carga</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field" data-act="fin"><div class="cdr-field-label">Fin Carga</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field field-calc" data-act="tiempo"><div class="cdr-field-label">Tiempo Carga</div><div class="cdr-field-value valor-tiempo-carga"></div></div>
-                        <div class="cdr-field" data-act="doc"><div class="cdr-field-label">Documentos</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field field-salida" data-act="salida"><div class="cdr-field-label">Salida</div><div class="cdr-field-value"></div></div>
-                    </div>
-                </div>
-                <div class="cdr-card" data-cdr="MERIDA" data-tu="39930" data-obj-arribo="06:00" data-obj-inicio="06:50" data-obj-fin="09:20" data-obj-doc="10:20" data-obj-salida="11:00">
-                    <div class="cdr-card-header">
-                        <div class="cdr-id"><span class="cdr-name">MERIDA</span></div>
-                        <div class="cdr-tucol"><span class="cdr-tucol-lbl">TU</span><span class="cdr-tucol-val">39930</span></div>
-                        <div class="cdr-status-bar"></div>
-                    </div>
-                    <div class="cdr-card-body">
-                        <div class="cdr-field" data-act="arribo"><div class="cdr-field-label">Arribo Unidad</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field" data-act="inicio"><div class="cdr-field-label">Inicio Carga</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field" data-act="fin"><div class="cdr-field-label">Fin Carga</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field field-calc" data-act="tiempo"><div class="cdr-field-label">Tiempo Carga</div><div class="cdr-field-value valor-tiempo-carga"></div></div>
-                        <div class="cdr-field" data-act="doc"><div class="cdr-field-label">Documentos</div><div class="cdr-field-value"></div></div>
-                        <div class="cdr-field field-salida" data-act="salida"><div class="cdr-field-label">Salida</div><div class="cdr-field-value"></div></div>
-                    </div>
-                </div>
+            <div class="tl-table-wrap">
+                <table class="tl-table">
+                    <tbody id="tl-body"></tbody>
+                </table>
+            </div>
+
+            <div class="tl-pager">
+                <button class="tl-pgbtn" onclick="tlPrevPage()">&#8249; Anterior</button>
+                <span id="tl-page-info" class="tl-page-info">Página 1 / 1</span>
+                <button class="tl-pgbtn" onclick="tlNextPage()">Siguiente &#8250;</button>
             </div>
         </section>
 
@@ -1267,18 +1107,7 @@
             return { tu: lista[i], pos: i + 1, total: lista.length };
         }
         function pintarTU() {
-            // Timeline
-            document.querySelectorAll('#grid-facilitadores .cdr-card').forEach(card => {
-                const info = tuActual(card.dataset.cdr);
-                const val = card.querySelector('.cdr-tucol-val');
-                const lbl = card.querySelector('.cdr-tucol-lbl');
-                if (val && val.innerText !== info.tu) {
-                    val.innerText = info.tu;
-                    val.classList.remove('tu-flip'); void val.offsetWidth; val.classList.add('tu-flip');
-                }
-                if (lbl) lbl.innerText = 'TU ' + info.pos + '/' + info.total;
-            });
-            // CDM > CDR
+            // CDM > CDR (Timeline ya no usa TU rotativa; muestra un registro por TU)
             document.querySelectorAll('#matrizDbr tbody tr').forEach(fila => {
                 const info = tuActual(fila.dataset.dest);
                 const span = fila.querySelector('.tu-roll');
@@ -1295,78 +1124,191 @@
         }
 
 
-        const tlDev = {
-            "MEXICO SUR":[0,0,0,0,0], "PUEBLA":[0,0,0,0,0], "MORELIA":[0,0,0,0,0],
-            "CHIHUAHUA":[0,0,3,0,0], "MEXICO NORTE":[0,0,8,12,25], "TIJUANA":[0,0,0,8,4],
-            "LA PAZ":[0,2,0,0,0], "MONTERREY":[0,0,0,0,0], "MERIDA":[0,0,0,0,0],
-            "TUXTLA":[0,0,0,0,0], "VERACRUZ":[0,0,6,18,20], "CULIACAN":[0,0,0,0,0],
-            "BAJIO":[0,0,0,0,0], "GUADALAJARA":[0,0,0,0,0]
+        // ==========================================
+        // TIMELINE: registro por TU, agrupado por CDR, con paginación
+        // ==========================================
+        // Objetivos por CDR (arribo, inicio, fin, doc, salida) — no se muestran como dato de TU
+        const tlObjetivos = {
+            "MEXICO NORTE": {arribo:"01:00", inicio:"01:50", fin:"04:20", doc:"05:20", salida:"06:00"},
+            "MEXICO SUR":   {arribo:"00:00", inicio:"00:50", fin:"03:20", doc:"04:20", salida:"05:00"},
+            "PUEBLA":       {arribo:"00:00", inicio:"00:50", fin:"03:20", doc:"04:20", salida:"05:00"},
+            "BAJIO":        {arribo:"10:00", inicio:"10:50", fin:"13:20", doc:"14:20", salida:"15:00"},
+            "GUADALAJARA":  {arribo:"10:00", inicio:"10:50", fin:"13:20", doc:"14:20", salida:"15:00"},
+            "MORELIA":      {arribo:"00:00", inicio:"00:50", fin:"03:20", doc:"04:20", salida:"05:30"},
+            "CULIACAN":     {arribo:"08:00", inicio:"08:50", fin:"11:20", doc:"12:20", salida:"13:00"},
+            "LA PAZ":       {arribo:"05:00", inicio:"05:50", fin:"08:20", doc:"09:20", salida:"10:00"},
+            "CHIHUAHUA":    {arribo:"01:00", inicio:"01:50", fin:"04:20", doc:"05:20", salida:"06:00"},
+            "TIJUANA":      {arribo:"01:00", inicio:"01:50", fin:"04:20", doc:"05:20", salida:"06:00"},
+            "MONTERREY":    {arribo:"05:00", inicio:"05:50", fin:"08:20", doc:"09:20", salida:"10:00"},
+            "VERACRUZ":     {arribo:"06:00", inicio:"06:50", fin:"09:20", doc:"10:20", salida:"11:00"},
+            "TUXTLA":       {arribo:"06:00", inicio:"06:50", fin:"09:20", doc:"10:20", salida:"11:00"},
+            "MERIDA":       {arribo:"06:00", inicio:"06:50", fin:"09:20", doc:"10:20", salida:"11:00"}
         };
-        const tlActs = ['arribo','inicio','fin','doc','salida'];
-        let tlProg = new Array(14).fill(0);
-        let tlTick = 0;
-        let tlDone = false;
+        // Desvíos base por CDR (min) [arribo,inicio,fin,doc,salida]
+        const tlDev = {
+            "MEXICO NORTE":[0,0,8,12,25], "MEXICO SUR":[0,0,0,0,0], "PUEBLA":[0,0,0,0,0],
+            "BAJIO":[0,0,0,0,0], "GUADALAJARA":[0,0,2,0,0], "MORELIA":[0,0,0,0,0],
+            "CULIACAN":[0,0,0,0,0], "LA PAZ":[0,2,0,0,0], "CHIHUAHUA":[0,0,3,0,0],
+            "TIJUANA":[0,0,0,8,4], "MONTERREY":[0,0,0,0,0], "VERACRUZ":[0,0,6,18,20],
+            "TUXTLA":[0,0,0,0,0], "MERIDA":[0,0,0,0,0]
+        };
+        const tlOrden = ["MEXICO NORTE","MEXICO SUR","PUEBLA","BAJIO","GUADALAJARA","MORELIA","CULIACAN","LA PAZ","CHIHUAHUA","TIJUANA","MONTERREY","VERACRUZ","TUXTLA","MERIDA"];
 
-        function objDe(card, act) {
-            return { arribo: card.dataset.objArribo, inicio: card.dataset.objInicio,
-                     fin: card.dataset.objFin, doc: card.dataset.objDoc, salida: card.dataset.objSalida }[act];
+        // Icono según punto 4: actividades intermedias -> verde/amarillo; Salida -> verde/rojo
+        function icoActividad(dev, esSalida) {
+            if (dev <= 0) return icoStatus('green');
+            return esSalida ? icoStatus('red') : icoStatus('yellow');
         }
 
-        function pintarTimeline() {
-            const cards = document.querySelectorAll('#grid-facilitadores .cdr-card');
-            cards.forEach((card, idx) => {
-                const cdr = card.dataset.cdr;
-                const dev = tlDev[cdr] || [0,0,0,0,0];
-                const prog = tlProg[idx];
-
-                // Campos de actividad
-                tlActs.forEach((a, ai) => {
-                    const fv = card.querySelector('.cdr-field[data-act="'+a+'"] .cdr-field-value');
-                    if (!fv) return;
-                    if (ai < prog) {
-                        const actual = aHHMM(aMinutos(objDe(card,a)) + dev[ai]);
-                        const st = estatusPorDesvio(dev[ai]);
-                        fv.innerHTML = '<span class="fv-time">'+actual+'</span><span class="fv-ic">'+icoStatus(st)+'</span>';
-                    } else {
-                        fv.innerHTML = '<span class="fv-empty">—</span>';
-                    }
+        // Construir registros por TU (con jitter en el arribo para variar por TU)
+        function generarGrupos() {
+            const jitterArribo = [0, 10, 30, 0, 5, 15, 0, 20, 0, 8];
+            return tlOrden.map(cdr => {
+                const obj = tlObjetivos[cdr];
+                const base = tlDev[cdr] || [0,0,0,0,0];
+                const tus = tusDe(cdr);
+                const filas = tus.map((tu, j) => {
+                    const dArr = base[0] + jitterArribo[j % jitterArribo.length];
+                    const dev = [dArr, base[1], base[2], base[3], base[4]];
+                    const tArr = aMinutos(obj.arribo)+dev[0];
+                    const tIni = aMinutos(obj.inicio)+dev[1];
+                    const tFin = aMinutos(obj.fin)+dev[2];
+                    const tDoc = aMinutos(obj.doc)+dev[3];
+                    const tSal = aMinutos(obj.salida)+dev[4];
+                    return {
+                        tu, prog: 0,   // prog: nº de actividades reveladas (0..5) — llenado dinámico
+                        arribo:{v:aHHMM(tArr), dev:dev[0]},
+                        inicio:{v:aHHMM(tIni), dev:dev[1]},
+                        fin:{v:aHHMM(tFin), dev:dev[2]},
+                        tiempo:(tFin - tIni),
+                        doc:{v:aHHMM(tDoc), dev:dev[3]},
+                        salida:{v:aHHMM(tSal), dev:dev[4]}
+                    };
                 });
-
-                // Tiempo de carga (calc): requiere inicio(1) y fin(2) revelados
-                const tc = card.querySelector('.cdr-field[data-act="tiempo"] .valor-tiempo-carga');
-                if (tc) {
-                    if (prog > 2) {
-                        const diff = (aMinutos(card.dataset.objFin)+dev[2]) - (aMinutos(card.dataset.objInicio)+dev[1]);
-                        tc.innerText = diff + ' min';
-                    } else { tc.innerHTML = '<span class="fv-empty">—</span>'; }
-                }
-
-                // Estatus
-                const barra = card.querySelector('.cdr-status-bar');
-                card.classList.remove('estado-tiempo','estado-riesgo','estado-retrasado','estado-proceso','estado-programado');
-                barra.classList.remove('status-tiempo','status-riesgo','status-retrasado','status-proceso','status-programado');
-                let texto, ec, bc;
-                if (prog === 0) { texto='⏳ PROGRAMADO'; ec='estado-programado'; bc='status-programado'; }
-                else if (prog >= 5) {
-                    if (dev[4] <= 0) { texto='✔ A TIEMPO'; ec='estado-tiempo'; bc='status-tiempo'; }
-                    else { texto='✖ RETRASADO (+'+dev[4]+' min)'; ec='estado-retrasado'; bc='status-retrasado'; }
-                } else {
-                    let maxdev = 0;
-                    for (let k=0;k<prog;k++) maxdev = Math.max(maxdev, dev[k]);
-                    if (maxdev >= 1) { texto='▲ EN RIESGO (+'+maxdev+' min)'; ec='estado-riesgo'; bc='status-riesgo'; }
-                    else { texto='▶ EN PROCESO'; ec='estado-proceso'; bc='status-proceso'; }
-                }
-                card.classList.add(ec); barra.classList.add(bc); barra.innerText = texto;
+                return { cdr, obj, tus: filas };
             });
         }
 
-        function avanzarTimeline() {
-            if (tlDone) return;
-            tlTick++;
-            for (let i=0;i<14;i++) tlProg[i] = Math.max(0, Math.min(5, tlTick - Math.floor(i/2)));
-            if (tlProg.every(pr => pr >= 5)) tlDone = true;
-            pintarTimeline();
+        let tlGrupos = [];
+        let tlPaginas = [];
+        let tlPag = 0;
+        let tlTimer = null, tlFillTimer = null;
+        const TL_BUDGET = 15; // filas visibles por página (encabezado de grupo + TUs)
+
+        // Paginación que NO corta un CDR: si el grupo no cabe completo, va a la página siguiente.
+        // Si un grupo es más grande que el presupuesto, se parte pero repitiendo su cabecera.
+        function construirPaginas() {
+            if (!tlGrupos.length) tlGrupos = generarGrupos();
+            tlPaginas = [];
+            let pag = [], filas = 0;
+            tlGrupos.forEach(g => {
+                const n = 1 + g.tus.length;
+                if (n <= TL_BUDGET) {
+                    if (filas + n > TL_BUDGET && pag.length) { tlPaginas.push(pag); pag = []; filas = 0; }
+                    pag.push({ cdr:g.cdr, obj:g.obj, ref:g, tus:g.tus });
+                    filas += n;
+                } else {
+                    // grupo enorme: partir en trozos, cada trozo con su cabecera
+                    let idx = 0;
+                    while (idx < g.tus.length) {
+                        if (filas + 2 > TL_BUDGET && pag.length) { tlPaginas.push(pag); pag = []; filas = 0; }
+                        const cabe = Math.max(1, (TL_BUDGET - filas) - 1);
+                        const trozo = g.tus.slice(idx, idx + cabe);
+                        pag.push({ cdr:g.cdr, obj:g.obj, ref:g, tus:trozo });
+                        filas += 1 + trozo.length; idx += trozo.length;
+                        if (filas >= TL_BUDGET) { tlPaginas.push(pag); pag = []; filas = 0; }
+                    }
+                }
+            });
+            if (pag.length) tlPaginas.push(pag);
+            if (tlPag >= tlPaginas.length) tlPag = 0;
         }
+
+        // Estatus de la TU según su avance (prog) y desvíos
+        function estatusTU(f) {
+            if (f.prog === 0) return { txt:'PROGRAMADO', cls:'est-programado' };
+            if (f.prog >= 5) { // salida ya cargada
+                return f.salida.dev <= 0 ? { txt:'A TIEMPO', cls:'est-tiempo' } : { txt:'RETRASADO', cls:'est-retrasado' };
+            }
+            // en curso (arribo..documentos): si alguna actividad revelada no cumple -> EN RIESGO, si no EN PROCESO
+            const devs = [f.arribo.dev, f.inicio.dev, f.fin.dev, f.doc.dev];
+            let riesgo = false;
+            for (let k=0;k<f.prog;k++) if (devs[k] > 0) riesgo = true;
+            return riesgo ? { txt:'EN RIESGO', cls:'est-riesgo' } : { txt:'EN PROCESO', cls:'est-proceso' };
+        }
+
+        function celTiempo(f, act, ai, esSalida) {
+            if (ai >= f.prog) return '<td><span class="tl-empty">—</span></td>';
+            return '<td><span class="tl-cellval"><span class="tl-time">'+f[act].v+'</span>'
+                 + '<span class="tl-ic">'+icoActividad(f[act].dev, esSalida)+'</span></span></td>';
+        }
+
+        function pintarTimeline() {
+            const tbody = document.getElementById('tl-body');
+            if (!tbody) return;
+            if (!tlPaginas.length) construirPaginas();
+            const pag = tlPaginas[tlPag] || [];
+            let html = '';
+            pag.forEach(bloque => {
+                const o = bloque.obj;
+                html += '<tr class="tl-group">'
+                    + '<td class="tl-estcol tl-cdrname">'+bloque.cdr+'</td>'
+                    + '<td class="tl-cdr"><span class="tl-objtag">Obj.</span><span class="tl-tucount">TU\'s<span class="tl-tunum">'+bloque.ref.tus.length+'</span></span></td>'
+                    + '<td class="tl-objh">'+o.arribo+'<span class="tl-colh">Arribo Unidad</span></td>'
+                    + '<td class="tl-objh">'+o.inicio+'<span class="tl-colh">Inicio Carga</span></td>'
+                    + '<td class="tl-objh">'+o.fin+'<span class="tl-colh">Fin Carga</span></td>'
+                    + '<td class="tl-objh"><span class="tl-colh" style="margin-top:0">Tiempo Carga</span></td>'
+                    + '<td class="tl-objh">'+o.doc+'<span class="tl-colh">Documentos</span></td>'
+                    + '<td class="tl-objh">'+o.salida+'<span class="tl-colh">Salida</span></td>'
+                    + '</tr>';
+                bloque.tus.forEach(f => {
+                    const est = estatusTU(f);
+                    const tiempo = (f.prog > 2) ? (f.tiempo + ' min') : '<span class="tl-empty">—</span>';
+                    html += '<tr class="tl-row">'
+                        + '<td class="tl-estcol"><span class="tl-est '+est.cls+'">'+est.txt+'</span></td>'
+                        + '<td class="tl-tu">'+f.tu+'</td>'
+                        + celTiempo(f,'arribo',0,false) + celTiempo(f,'inicio',1,false) + celTiempo(f,'fin',2,false)
+                        + '<td class="tl-tiempo">'+tiempo+'</td>'
+                        + celTiempo(f,'doc',3,false) + celTiempo(f,'salida',4,true)
+                        + '</tr>';
+                });
+            });
+            tbody.innerHTML = html;
+            const info = document.getElementById('tl-page-info');
+            if (info) info.innerText = 'Página ' + (tlPag+1) + ' / ' + tlPaginas.length;
+        }
+
+        // Llenado dinámico: cada tick revela una actividad más en las TU (escalonado)
+        function avanzarLlenado() {
+            let algo = false;
+            tlGrupos.forEach((g, gi) => {
+                g.tus.forEach((f, j) => {
+                    // arranque escalonado por grupo y por TU
+                    const arranque = gi + Math.floor(j/2);
+                    if (tlFillTick > arranque && f.prog < 5) { f.prog++; algo = true; }
+                });
+            });
+            tlFillTick++;
+            pintarTimeline();
+            if (!algo && tlGrupos.every(g => g.tus.every(f => f.prog >= 5))) {
+                clearInterval(tlFillTimer); tlFillTimer = null; // se detiene al completar
+            }
+        }
+        let tlFillTick = 0;
+        function iniciarLlenado() {
+            tlFillTick = 0;
+            tlGrupos.forEach(g => g.tus.forEach(f => f.prog = 0));
+            construirPaginas(); pintarTimeline();
+            if (tlFillTimer) clearInterval(tlFillTimer);
+            tlFillTimer = setInterval(avanzarLlenado, 1500); // revela info cada 1.5 s
+        }
+
+        function programarTimeline() {
+            if (tlTimer) clearInterval(tlTimer);
+            tlTimer = setInterval(() => { tlPag = (tlPag+1) % tlPaginas.length; pintarTimeline(); }, 10000);
+        }
+        function tlNextPage() { tlPag = (tlPag+1) % tlPaginas.length; pintarTimeline(); programarTimeline(); }
+        function tlPrevPage() { tlPag = (tlPag-1+tlPaginas.length) % tlPaginas.length; pintarTimeline(); programarTimeline(); }
 
         // ==========================================
         // MOTOR CDM > CDR (iconos + % + tiempo, atributos, dinámico)
@@ -1457,7 +1399,7 @@
                     } else {
                         const val = col==='surtido'?d.s : col==='consolidado'?d.c : col==='embarque'?d.e : d.r;
                         const st = statusPct(col, val);
-                        let html = '<span class="mx-cell">'+icoStatus(st)+'<span class="mx-val">'+val+'%</span>';
+                        let html = '<span class="mx-cell">'+icoStatus(st)+'<span class="mx-val">'+Math.round(val)+'%</span>';
                         if (col !== 'salida') html += '<span class="mx-time">'+fmtHoras(horasDe(col,i,dest))+'</span>'; // Backlog sin horas
                         const pz = piezasDe(d, col);
                         if (pz !== null) html += '<span class="mx-pzas">- '+fmtNum(pz)+' pzas</span>';
@@ -1476,9 +1418,9 @@
             pintarCDM();
         }
 
-        // Reinicia el bucle de datos dinámicos (Timeline + CDM > CDR)
+        // Reinicia el bucle de datos dinámicos (Timeline vuelve a llenarse + CDM > CDR)
         function reiniciarSimulacion() {
-            tlTick = 0; tlProg.fill(0); tlDone = false; pintarTimeline();
+            tlPag = 0; iniciarLlenado(); programarTimeline();
             cdmTick = 0; cdmProg.fill(0); cdmDone = false; pintarCDM();
         }
 
@@ -1705,16 +1647,15 @@
 
         // Iniciar todo
         window.onload = function() {
-            pintarTimeline();
+            iniciarLlenado();          // Timeline: llenado dinámico + páginas
             pintarCDM();
             pintarTU();
             pintarPuertas();
             actualizarReloj();
-            avanzarTimeline();   // arranca la corrida de datos de inmediato
             avanzarCDM();
-            setInterval(rotarTU, 8000);             // TU rota cada 8 s (Timeline + CDM > CDR)
+            programarTimeline();                    // Timeline cambia de página cada 10 s
+            setInterval(rotarTU, 8000);             // TU rota en CDM > CDR cada 8 s
             setInterval(avanzarRFID, 5000);         // Puertas (RFID) cada 5 s
-            setInterval(avanzarTimeline, 5000);     // Timeline dinámico cada 5 s
             setInterval(avanzarCDM, 5000);          // CDM > CDR dinámico cada 5 s
             setInterval(actualizarReloj, 30000);
             setInterval(autoScrollTransportes, 50); // scroll automático de Transportes
