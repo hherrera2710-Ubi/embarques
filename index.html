@@ -50,15 +50,15 @@
         .screen-info p { font-size: 12px; color: #888; font-weight: bold;}
 
         /* CONTENEDOR PRINCIPAL */
-        main { flex-grow: 1; padding: 25px 40px; position: relative; overflow: hidden; }
+        main { flex-grow: 1; padding: 12px 40px 18px; position: relative; overflow: hidden; }
 
         /* PANTALLAS (VISTAS) */
         .view-section { display: none; animation: fadeIn 0.5s ease-in-out; height: 100%; flex-direction: column;}
         .view-section.active { display: flex; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
-        .view-header-container { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px; border-bottom: 3px solid var(--ubictum-teal); padding-bottom: 10px; flex-shrink: 0; }
-        .view-title { font-size: 24px; color: var(--ubictum-gray); margin: 0;}
+        .view-header-container { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 10px; border-bottom: 3px solid var(--ubictum-teal); padding-bottom: 5px; flex-shrink: 0; }
+        .view-title { font-size: 22px; color: var(--ubictum-gray); margin: 0;}
         
         /* Panel de Filtros */
         .filter-panel { display: flex; gap: 20px; align-items: center; background: #eef2f5; padding: 8px 15px; border-radius: 6px; border: 1px solid #dcdcdc; }
@@ -106,7 +106,7 @@
         /* ---- TABLA TIMELINE PAGINADA (registro por TU, agrupado por CDR) ---- */
         .tl-table-wrap { flex: 1; min-height: 0; overflow: hidden; width: 100%; background: var(--white); border-radius: 12px; border: 1px solid #e8edf3; box-shadow: 0 4px 14px rgba(30,58,138,0.06); padding: 6px 14px; }
         .tl-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
-        .tl-table td, .tl-table th { padding: 5px 8px; text-align: center; font-size: 20px; vertical-align: middle; }
+        .tl-table td, .tl-table th { padding: 4px 8px; text-align: center; font-size: 20px; vertical-align: middle; }
         .tl-table td:nth-child(1), .tl-table th:nth-child(1) { width: 210px; }
         .tl-table td:nth-child(2), .tl-table th:nth-child(2) { width: 120px; }
 
@@ -115,7 +115,7 @@
         .tl-head .tl-h-cdr { text-align: left; padding-left: 14px; }
 
         /* Fila del CDR (nombre + nº TU's + Obj. salida) */
-        .tl-group td { border-top: 2px solid #dbe2f0; background: #f5f8fc; padding-top: 7px; padding-bottom: 7px; }
+        .tl-group td { border-top: 2px solid #dbe2f0; background: #f5f8fc; padding-top: 5px; padding-bottom: 5px; }
         .tl-group .tl-cdrname { text-align: left !important; font-weight: 800; color: var(--ubictum-blue-dark); font-size: 21px; padding-left: 14px !important; }
         .tl-group .tl-tuqty { font-weight: 800; color: var(--ubictum-blue-dark); font-size: 20px; }
         .tl-group .tl-objsalida { text-align: center !important; font-size: 15px; font-weight: 700; color: #8a8f98; }
@@ -141,10 +141,10 @@
         .tl-est.est-programado { background: #8c97a3; }
 
         /* Paginador */
-        .tl-pager { flex-shrink: 0; display: flex; align-items: center; justify-content: center; gap: 20px; padding: 12px 0 2px; }
-        .tl-pgbtn { background: var(--ubictum-blue-dark); color: #fff; border: none; padding: 9px 22px; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; transition: 0.2s; }
+        #tl-controls { align-items: center; gap: 16px; }
+        .tl-pgbtn { background: var(--ubictum-blue-dark); color: #fff; border: none; padding: 9px 20px; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; transition: 0.2s; }
         .tl-pgbtn:hover { background: #16296b; }
-        .tl-page-info { font-size: 15px; font-weight: 800; color: var(--ubictum-gray); min-width: 120px; text-align: center; }
+        .tl-page-info { font-size: 14px; font-weight: 800; color: #cfd8e6; min-width: 110px; text-align: center; }
 
         .facilitadores-grid {
             display: flex;
@@ -580,12 +580,6 @@
                 <table class="tl-table">
                     <tbody id="tl-body"></tbody>
                 </table>
-            </div>
-
-            <div class="tl-pager">
-                <button class="tl-pgbtn" onclick="tlPrevPage()">&#8249; Anterior</button>
-                <span id="tl-page-info" class="tl-page-info">Página 1 / 1</span>
-                <button class="tl-pgbtn" onclick="tlNextPage()">Siguiente &#8250;</button>
             </div>
         </section>
 
@@ -1031,6 +1025,11 @@
                 <button onclick="toggleAutoPlay()" id="btn-auto" style="background-color: var(--success-green); color: white; margin-left: 20px;">⏸ Pausar Carrusel</button>
                 <button id="btn-reiniciar" onclick="reiniciarSimulacion()" title="Reinicia la carga dinámica de datos" style="margin-left: 12px;">&#8635; Reiniciar datos</button>
             </div>
+            <div class="controls" id="tl-controls" style="display: none;">
+                <button class="tl-pgbtn" onclick="tlPrevPage()">&#8249; Anterior</button>
+                <span id="tl-page-info" class="tl-page-info">Página 1 / 1</span>
+                <button class="tl-pgbtn" onclick="tlNextPage()">Siguiente &#8250;</button>
+            </div>
         </div>
         <div class="status-indicator">
             <span class="dot" style="animation: blink 1.5s infinite;"></span> Conexión Estable: SAP EWM | DB Operativa
@@ -1195,7 +1194,7 @@
         let tlPaginas = [];
         let tlPag = 0;
         let tlTimer = null, tlFillTimer = null;
-        const TL_BUDGET = 14; // filas visibles por página (encabezado de grupo + TUs)
+        const TL_BUDGET = 15; // filas visibles por página (encabezado de grupo + TUs)
 
         // Paginación que NO corta un CDR: si el grupo no cabe completo, va a la página siguiente.
         // Si un grupo es más grande que el presupuesto, se parte pero repitiendo su cabecera.
@@ -1496,6 +1495,8 @@
             const controlesCarrusel = document.getElementById('carousel-controls');
             const textoUbicacion = document.getElementById('ubicacion-pantalla');
             const textoModo = document.getElementById('modo-pantalla');
+            const tlControls = document.getElementById('tl-controls');
+            tlControls.style.display = (zona === 'facilitadores') ? 'flex' : 'none';
 
             if (zona === 'embarques') {
                 textoUbicacion.innerText = "📍 Transportes";
