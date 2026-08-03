@@ -593,12 +593,12 @@
             <div class="matriz-container">
                 <table class="table-matriz" id="matrizDbr">
                                         <thead>
-                        <tr><th style="background-color: var(--white); border: none;"></th><th class="th-tu">TU</th><th class="th-teal2">Surtido CDM</th><th class="th-teal2">Consolidado</th><th class="th-gray2">Embarque TU</th><th class="th-gray2">Backlog</th><th class="th-black">Salida CDR</th><th class="th-black">Tránsito TU</th></tr>
+                        <tr><th style="background-color: var(--white); border: none;"></th><th class="th-tu">TU</th><th class="th-teal2">Surtido</th><th class="th-teal2">Consolidado</th><th class="th-gray2">Carga</th><th class="th-gray2">Backlog</th><th class="th-black">Salida</th><th class="th-black">Llegada</th></tr>
                         <tr>
                             <th>Destino</th>
                             <th></th>
                             <th>% Fill rate<br><span class="objetivo-label">Obj: &gt; 99%</span></th>
-                            <th>% Embalado a HU<br><span class="objetivo-label">Obj: &gt; 98%</span></th>
+                            <th>% Embalado a HU Master<br><span class="objetivo-label">Obj: &gt; 98%</span></th>
                             <th>% Embarque a TU<br><span class="objetivo-label">Obj: 100%</span></th>
                             <th>% Stage Resguardo<br><span class="objetivo-label">Obj: 0%</span></th>
                             <th>¿Salió a tiempo?</th>
@@ -1318,7 +1318,7 @@
         // MOTOR CDM > CDR (iconos + % + tiempo, atributos, dinámico)
         // ==========================================
         const cdmDatos = {
-            "MEXICO NORTE":{s:99,c:98,e:92,r:8,n:false,t:false, pzas:10000, hrs:{surtido:3.5, consolidado:2.5, embarque:2.5}},
+            "MEXICO NORTE":{s:99,c:98,e:92,r:8,n:false,t:false},
             "MEXICO SUR":{s:100,c:100,e:100,r:0,n:true,t:true}, "PUEBLA":{s:98,c:97,e:96,r:4,n:true,t:true},
             "BAJIO":{s:99,c:99,e:98,r:2,n:true,t:true},  "GUADALAJARA":{s:97,c:95,e:94,r:6,n:true,t:true},
             "MORELIA":{s:99,c:99,e:98,r:2,n:true,t:true},"CULIACAN":{s:100,c:100,e:100,r:0,n:true,t:true},
