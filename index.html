@@ -344,6 +344,15 @@
            ========================================== */
         .resumen-container { display: flex; flex-direction: column; gap: 18px; height: 100%; overflow-y: auto; padding-right: 6px; padding-bottom: 10px; }
         .res-section { background: var(--white); border: 1px solid #e8edf3; border-radius: 14px; padding: 20px 24px; box-shadow: 0 4px 14px rgba(30,58,138,0.06); flex-shrink: 0; }
+        /* Leyendas de iconos (Timeline / CDM > CDR) */
+        .leg-wrap { display: flex; gap: 16px; flex-wrap: wrap; margin: 10px 0 6px; }
+        .leg-card { border: 1px solid #e3e8f2; border-radius: 9px; padding: 10px 14px 12px; background: #fbfcfe; flex: 1; min-width: 235px; }
+        .leg-card h5 { margin: 0 0 8px; font-size: 12px; color: var(--ubictum-blue-dark); text-transform: uppercase; letter-spacing: .4px; border-bottom: 1px solid #e8edf3; padding-bottom: 5px; }
+        .leg-row { display: flex; align-items: center; gap: 10px; padding: 4px 0; font-size: 12.5px; color: #444; }
+        .leg-row svg { width: 20px; height: 20px; flex-shrink: 0; }
+        .leg-rango { font-weight: 800; min-width: 96px; color: #333; }
+        .leg-note { font-size: 12px; color: #666; margin: 2px 0 0; }
+        .est-badge { display: inline-block; padding: 3px 9px; border-radius: 5px; font-size: 11px; font-weight: 800; color: #fff; font-family: 'Consolas','Courier New',monospace; min-width: 96px; text-align: center; }
         .res-section.intro { background: linear-gradient(135deg, #eef7f9 0%, #f4fafb 100%); border-color: #cfe6ec; }
         .res-head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
         .res-num { width: 30px; height: 30px; flex-shrink: 0; border-radius: 50%; background: linear-gradient(135deg, var(--ubictum-blue-dark), #2a4eb0); color: #fff; font-weight: 800; font-size: 15px; display: flex; align-items: center; justify-content: center; }
@@ -671,7 +680,7 @@
                     <div class="res-head"><div class="res-num">3</div><h3>Detalle de cada pantalla y su mapeo de datos</h3></div>
                     <p class="res-p">Para cada pantalla se indica el campo, su origen (fila DATA) y la descripción/KPI asociado.</p>
 
-                    <div class="res-map-title">3.1 Embarques / Transportes</div>
+                    <div class="res-map-title">3.1 Transportes</div>
                     <p class="res-map-desc">Vista fija para la zona de andenes. Muestra los KPIs de viajes (programados, pendientes, salidas) y una tabla por TU con estatus y cumplimiento de la salida objetivo.</p>
                     <table class="res-table">
                         <tr><th>Campo</th><th>Origen (DATA)</th><th>KPI / Descripción</th></tr>
@@ -684,7 +693,7 @@
                         <tr><td class="c-campo">Estatus Salida</td><td><span class="src-badge src-ud">Ubictum Delivery</span></td><td class="c-desc">Cumplimiento de la salida (a tiempo / tarde)</td></tr>
                     </table>
 
-                    <div class="res-map-title">3.2 Embarques / Puertas</div>
+                    <div class="res-map-title">3.2 Puertas</div>
                     <p class="res-map-desc">Pantalla vertical fija por puerta. Muestra puerta, destino, objetivo de embarque, TU y el avance de HU's (consolidadas y embarcadas), que se llenan en tiempo real conforme se confirman por RFID. Toda la información proviene de SAP EWM.</p>
                     <table class="res-table">
                         <tr><th>Campo</th><th>Origen (DATA)</th><th>KPI / Descripción</th></tr>
@@ -696,34 +705,79 @@
                         <tr><td class="c-campo">HU's Embarcadas</td><td><span class="src-badge src-ewm">SAP EWM</span></td><td class="c-desc">Pendientes / Total y % de avance — se llena por confirmación RFID</td></tr>
                     </table>
 
-                    <div class="res-map-title">3.3 Embarques / Timeline</div>
-                    <p class="res-map-desc">Monitoreo de tiempos por CDR en tarjetas compactas. Cada CDR muestra arribo, inicio/fin de carga, tiempo de carga calculado, documentos y salida, con un estatus tipo aeropuerto que compara la salida contra la ventana objetivo (A TIEMPO / EN RIESGO / RETRASADO / EN PROCESO / PROGRAMADO). Las 14 tarjetas se muestran completas, sin barra de desplazamiento.</p>
+                    <div class="res-map-title">3.3 Timeline</div>
+                    <p class="res-map-desc">Registro por TU agrupado por CDR, en una tabla paginada (cambia de página cada 10 s, con avance manual en el pie). Cada CDR muestra su nombre, su número de TU's y el objetivo de salida; debajo, una fila por TU con arribo, inicio/fin de carga, tiempo de carga (calculado), documentos y salida. Cada CDR tiene <strong>objetivos de horario fijos por actividad</strong> (arribo, inicio, fin, documentos y salida): ese objetivo no se muestra como dato, pero es la referencia contra la que se evalúa cada horario para pintar su icono.</p>
                     <table class="res-table">
                         <tr><th>Campo</th><th>Origen (DATA)</th><th>KPI / Descripción</th></tr>
-                        <tr><td class="c-campo">CDR</td><td><span class="src-badge src-ud">Ubictum Delivery</span></td><td class="c-desc">Centro de distribución (los 13–14 CDR, sin CDM)</td></tr>
-                        <tr><td class="c-campo">TU</td><td><span class="src-badge src-ud">Ubictum Delivery</span></td><td class="c-desc">Identificador de la unidad de transporte</td></tr>
-                        <tr><td class="c-campo">Arribo de unidad a CDR</td><td><span class="src-badge src-ud">Ubictum Delivery</span></td><td class="c-desc">Hora de arribo de la unidad</td></tr>
-                        <tr><td class="c-campo">Inicio de Carga</td><td><span class="src-badge src-ud">Ubictum Delivery</span></td><td class="c-desc">Hora de inicio de carga</td></tr>
-                        <tr><td class="c-campo">Fin de Carga</td><td><span class="src-badge src-ud">Ubictum Delivery</span></td><td class="c-desc">Hora de fin de carga</td></tr>
-                        <tr><td class="c-campo">Tiempo de Carga</td><td><span class="src-badge src-calc">Cálculo</span></td><td class="c-desc">Fin − Inicio (minutos), calculado en el tablero</td></tr>
-                        <tr><td class="c-campo">Documentos</td><td><span class="src-badge src-ud">Ubictum Delivery</span></td><td class="c-desc">Hora de liberación de documentos</td></tr>
-                        <tr><td class="c-campo">Salida</td><td><span class="src-badge src-ud">Ubictum Delivery</span></td><td class="c-desc">Hora de salida real</td></tr>
+                        <tr><td class="c-campo">Estatus</td><td><span class="src-badge src-calc">Cálculo</span></td><td class="c-desc">Estado de la TU según su avance (ver lógica abajo)</td></tr>
+                        <tr><td class="c-campo">CDR</td><td><span class="src-badge src-ud">Ubictum Delivery</span></td><td class="c-desc">Centro de distribución (los 14 CDR, sin CDM)</td></tr>
+                        <tr><td class="c-campo">TU's</td><td><span class="src-badge src-ud">Ubictum Delivery</span></td><td class="c-desc">Número de unidades de transporte del CDR y su identificador por fila</td></tr>
+                        <tr><td class="c-campo">Arribo de unidad</td><td><span class="src-badge src-ud">Ubictum Delivery</span></td><td class="c-desc">Hora de arribo + icono vs objetivo</td></tr>
+                        <tr><td class="c-campo">Inicio de Carga</td><td><span class="src-badge src-ud">Ubictum Delivery</span></td><td class="c-desc">Hora de inicio + icono vs objetivo</td></tr>
+                        <tr><td class="c-campo">Fin de Carga</td><td><span class="src-badge src-ud">Ubictum Delivery</span></td><td class="c-desc">Hora de fin + icono vs objetivo</td></tr>
+                        <tr><td class="c-campo">Tiempo de Carga</td><td><span class="src-badge src-calc">Cálculo</span></td><td class="c-desc">Fin − Inicio (minutos); no lleva icono</td></tr>
+                        <tr><td class="c-campo">Documentos</td><td><span class="src-badge src-ud">Ubictum Delivery</span></td><td class="c-desc">Hora de documentos + icono vs objetivo</td></tr>
+                        <tr><td class="c-campo">Salida</td><td><span class="src-badge src-ud">Ubictum Delivery</span></td><td class="c-desc">Hora de salida + icono vs objetivo</td></tr>
                     </table>
+                    <p class="res-p" style="margin-top:10px; margin-bottom:4px;"><strong>Iconos por horario (¿se cumplió el objetivo?):</strong></p>
+                    <div class="leg-wrap">
+                        <div class="leg-card">
+                            <h5>Arribo Unidad → Documentos (excluye Tiempo de Carga)</h5>
+                            <div class="leg-row"><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#2ecc71"/><path d="M5.6 10.3l2.8 2.8 6-6.3" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="leg-rango" style="color:#27ae60;">Verde</span> Cumplió el objetivo de horario</div>
+                            <div class="leg-row"><svg viewBox="0 0 20 20"><path d="M10 1.6 L18.9 17.6 L1.1 17.6 Z" fill="#f1c40f"/><rect x="9" y="6.8" width="2" height="5.4" rx="1" fill="#5a4b00"/><circle cx="10" cy="14.8" r="1.05" fill="#5a4b00"/></svg><span class="leg-rango" style="color:#c9a300;">Amarillo</span> No cumplió el objetivo</div>
+                        </div>
+                        <div class="leg-card">
+                            <h5>Salida</h5>
+                            <div class="leg-row"><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#2ecc71"/><path d="M5.6 10.3l2.8 2.8 6-6.3" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="leg-rango" style="color:#27ae60;">Verde</span> Cumplió el objetivo de salida</div>
+                            <div class="leg-row"><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#e74c3c"/><circle cx="10" cy="6.2" r="1.25" fill="#fff"/><rect x="9" y="8.4" width="2" height="6" rx="1" fill="#fff"/></svg><span class="leg-rango" style="color:#c0392b;">Rojo</span> No cumplió el objetivo de salida</div>
+                        </div>
+                    </div>
+                    <p class="res-p" style="margin-top:10px; margin-bottom:4px;"><strong>Estatus de la TU</strong> (cambia según van registrándose los horarios):</p>
+                    <div class="leg-wrap">
+                        <div class="leg-card" style="min-width:100%;">
+                            <div class="leg-row"><span class="est-badge" style="background:#8c97a3;">PROGRAMADO</span> Aún no se presenta ninguna información.</div>
+                            <div class="leg-row"><span class="est-badge" style="background:var(--sap-blue);">PROCESO</span> Ya hay registros y todos van cumpliendo objetivo, pero aún no hay horario de salida.</div>
+                            <div class="leg-row"><span class="est-badge" style="background:var(--alert-orange);">EN RIESGO</span> Cualquier campo entre Arribo de Unidad y Documentos presenta atraso, pero aún no concluye la salida.</div>
+                            <div class="leg-row"><span class="est-badge" style="background:var(--alert-red);">RETRASADO</span> El registro concluyó, pero no se cumplió el objetivo de salida.</div>
+                            <div class="leg-row"><span class="est-badge" style="background:var(--success-green);">A TIEMPO</span> Ya se concluyó la salida y cumplió con el objetivo.</div>
+                        </div>
+                    </div>
 
-                    <div class="res-map-title">3.4 Embarques / CDM &gt; CDR</div>
-                    <p class="res-map-desc">Matriz de calidad y salidas (DBR) por destino. Cada actividad muestra su % con icono de semáforo y el tiempo que tardó (en horas). <strong>Base de cálculo:</strong> Surtido CDM y Consolidado se calculan sobre el total de piezas surtidas (la merma de cada proceso baja el %); Embarque TU y Backlog se calculan sobre las piezas ya consolidadas. La primera fila (CDM) funciona como total: suma las TU y las horas de los CDR y promedia sus porcentajes. Debajo se desglosa por nodo (México Norte, México Sur, Puebla, Bajío, Guadalajara, Morelia, Culiacán, La Paz, Chihuahua, Tijuana, Monterrey, Veracruz, Tuxtla, Mérida).</p>
+                    <div class="res-map-title">3.4 CDM &gt; CDR</div>
+                    <p class="res-map-desc">Matriz de calidad y salidas (DBR) por destino. Cada actividad de porcentaje muestra su icono de estatus + el % + el tiempo que tardó (en horas); Salida y Llegada son atributos (sí/no). La primera fila (CDM) funciona como total: suma las TU y las horas de los CDR y promedia sus porcentajes; Salida y Llegada quedan vacías (aplican por CDR). Debajo se desglosa por nodo (México Norte, México Sur, Puebla, Bajío, Guadalajara, Morelia, Culiacán, La Paz, Chihuahua, Tijuana, Monterrey, Veracruz, Tuxtla, Mérida).</p>
                     <table class="res-table">
                         <tr><th>Campo</th><th>Origen (DATA)</th><th>KPI / Descripción</th></tr>
                         <tr><td class="c-campo">CDM / Destino</td><td><span class="src-badge src-ewm">SAP EWM</span></td><td class="c-desc">Identificador del nodo (CDM y CDR)</td></tr>
-                        <tr><td class="c-campo">TU</td><td><span class="src-badge src-ud">Ubictum Delivery</span></td><td class="c-desc">Unidad(es) de transporte del destino; un destino puede tener de 1 a N TU. Incluye las piezas totales del destino</td></tr>
-                        <tr><td class="c-campo">Surtido CDM</td><td><span class="src-badge src-ewm">SAP EWM</span></td><td class="c-desc">% Fill rate (Obj. &gt; 99%) sobre el total de piezas surtidas + tiempo + piezas</td></tr>
-                        <tr><td class="c-campo">Consolidado</td><td><span class="src-badge src-ewm">SAP EWM</span></td><td class="c-desc">% Embalado a HU Master (Obj. &gt; 98%) sobre el total de piezas surtidas + tiempo + piezas</td></tr>
-                        <tr><td class="c-campo">Embarque TU</td><td><span class="src-badge src-ewm">SAP EWM</span></td><td class="c-desc">% Embarque a TU (Obj. 100%) sobre las piezas consolidadas + tiempo + piezas</td></tr>
-                        <tr><td class="c-campo">Backlog</td><td><span class="src-badge src-ewm">SAP EWM</span></td><td class="c-desc">% Stage Resguardo (Obj. 0% — lógica invertida) sobre las piezas consolidadas + piezas (sin tiempo)</td></tr>
-                        <tr><td class="c-campo">Salida CDR</td><td><span class="src-badge src-ud">Ubictum Delivery</span></td><td class="c-desc">Atributo: ¿salió a tiempo? (palomita / tache)</td></tr>
-                        <tr><td class="c-campo">Tránsito TU</td><td><span class="src-badge src-ud">Ubictum Delivery</span></td><td class="c-desc">Atributo: ¿llegó a tiempo? (palomita / tache)</td></tr>
+                        <tr><td class="c-campo">TU</td><td><span class="src-badge src-ud">Ubictum Delivery</span></td><td class="c-desc">Unidad(es) de transporte del destino; un destino puede tener de 1 a N TU</td></tr>
+                        <tr><td class="c-campo">Surtido</td><td><span class="src-badge src-ewm">SAP EWM</span></td><td class="c-desc">% Fill rate (Obj. &gt; 99%) + tiempo</td></tr>
+                        <tr><td class="c-campo">Consolidado</td><td><span class="src-badge src-ewm">SAP EWM</span></td><td class="c-desc">% Embalado a HU Master (Obj. &gt; 98%) + tiempo</td></tr>
+                        <tr><td class="c-campo">Carga</td><td><span class="src-badge src-ewm">SAP EWM</span></td><td class="c-desc">% Embarque a TU (Obj. 100%) + tiempo</td></tr>
+                        <tr><td class="c-campo">Backlog</td><td><span class="src-badge src-ewm">SAP EWM</span></td><td class="c-desc">% Stage Resguardo (Obj. 0% — lógica invertida); sin tiempo</td></tr>
+                        <tr><td class="c-campo">Salida</td><td><span class="src-badge src-ud">Ubictum Delivery</span></td><td class="c-desc">Atributo: ¿salió a tiempo? (palomita / tache)</td></tr>
+                        <tr><td class="c-campo">Llegada</td><td><span class="src-badge src-ud">Ubictum Delivery</span></td><td class="c-desc">Atributo: ¿llegó a tiempo? (palomita / tache)</td></tr>
                     </table>
-                    <p class="res-p" style="font-size:12.5px; color:#555; margin-top:6px;"><strong>Ejemplo (México Norte):</strong> de 10,000 piezas surtidas → Surtido CDM 99% = 9,900 pzas; Consolidado 98% = 9,800 pzas; sobre esas 9,800 consolidadas → Embarque TU 92% = 9,016 pzas y Backlog 8% = 784 pzas.</p>
+                    <p class="res-p" style="margin-top:10px; margin-bottom:4px;"><strong>Iconos por rango de porcentaje:</strong></p>
+                    <div class="leg-wrap">
+                        <div class="leg-card">
+                            <h5>Surtido · Consolidado · Carga</h5>
+                            <div class="leg-row"><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#2ecc71"/><path d="M5.6 10.3l2.8 2.8 6-6.3" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="leg-rango">100%</span> Verde (óptimo)</div>
+                            <div class="leg-row"><svg viewBox="0 0 20 20"><path d="M10 1.6 L18.9 17.6 L1.1 17.6 Z" fill="#f1c40f"/><rect x="9" y="6.8" width="2" height="5.4" rx="1" fill="#5a4b00"/><circle cx="10" cy="14.8" r="1.05" fill="#5a4b00"/></svg><span class="leg-rango">99% – 95%</span> Amarillo</div>
+                            <div class="leg-row"><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#e67e22"/><circle cx="10" cy="6.2" r="1.25" fill="#fff"/><rect x="9" y="8.4" width="2" height="6" rx="1" fill="#fff"/></svg><span class="leg-rango">94% – 90%</span> Naranja</div>
+                            <div class="leg-row"><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#e74c3c"/><circle cx="10" cy="6.2" r="1.25" fill="#fff"/><rect x="9" y="8.4" width="2" height="6" rx="1" fill="#fff"/></svg><span class="leg-rango">Debajo de 90%</span> Rojo</div>
+                        </div>
+                        <div class="leg-card">
+                            <h5>Backlog (0% es lo óptimo)</h5>
+                            <div class="leg-row"><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#2ecc71"/><path d="M5.6 10.3l2.8 2.8 6-6.3" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="leg-rango">0%</span> Verde (óptimo)</div>
+                            <div class="leg-row"><svg viewBox="0 0 20 20"><path d="M10 1.6 L18.9 17.6 L1.1 17.6 Z" fill="#f1c40f"/><rect x="9" y="6.8" width="2" height="5.4" rx="1" fill="#5a4b00"/><circle cx="10" cy="14.8" r="1.05" fill="#5a4b00"/></svg><span class="leg-rango">1% – 5%</span> Amarillo</div>
+                            <div class="leg-row"><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#e67e22"/><circle cx="10" cy="6.2" r="1.25" fill="#fff"/><rect x="9" y="8.4" width="2" height="6" rx="1" fill="#fff"/></svg><span class="leg-rango">6% – 10%</span> Naranja</div>
+                            <div class="leg-row"><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#e74c3c"/><circle cx="10" cy="6.2" r="1.25" fill="#fff"/><rect x="9" y="8.4" width="2" height="6" rx="1" fill="#fff"/></svg><span class="leg-rango">Después de 10%</span> Rojo</div>
+                        </div>
+                        <div class="leg-card">
+                            <h5>Salida · Llegada (atributo)</h5>
+                            <div class="leg-row"><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#2ecc71"/><path d="M5.6 10.3l2.8 2.8 6-6.3" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="leg-rango">Sí cumple</span> Verde (palomita)</div>
+                            <div class="leg-row"><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#e74c3c"/><path d="M6.6 6.6l6.8 6.8M13.4 6.6l-6.8 6.8" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg><span class="leg-rango">No cumple</span> Rojo (tache)</div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- 4. Orígenes -->
@@ -793,7 +847,7 @@
 
                 <!-- Pantalla 1: Embarques / Transportes -->
                 <div class="arq-card">
-                    <h3>1. Embarques / Transportes</h3>
+                    <h3>1. Transportes</h3>
                     <div class="arq-table-wrap">
                         <table class="arq-table">
                             <tr class="arq-row-data">
@@ -822,7 +876,7 @@
 
                 <!-- Pantalla 2: Embarques / Puertas -->
                 <div class="arq-card">
-                    <h3>2. Embarques / Puertas</h3>
+                    <h3>2. Puertas</h3>
                     <div class="arq-table-wrap">
                         <table class="arq-table">
                             <tr class="arq-row-data">
@@ -858,25 +912,25 @@
 
                 <!-- Pantalla 3: Embarques / Timeline -->
                 <div class="arq-card">
-                    <h3>3. Embarques / Timeline</h3>
+                    <h3>3. Timeline</h3>
                     <div class="arq-table-wrap">
                         <table class="arq-table">
                             <tr class="arq-row-data">
                                 <th class="arq-rowlabel">DATA</th>
+                                <td><span class="arq-badge" style="background:#616265;color:#fff;">CÁLCULO</span></td>
                                 <td><span class="arq-badge badge-ud">UBICTUM DELIVERY</span></td>
                                 <td><span class="arq-badge badge-ud">UBICTUM DELIVERY</span></td>
                                 <td><span class="arq-badge badge-ud">UBICTUM DELIVERY</span></td>
                                 <td><span class="arq-badge badge-ud">UBICTUM DELIVERY</span></td>
-                                <td><span class="arq-badge badge-ud">UBICTUM DELIVERY</span></td>
-                                <td><span class="arq-badge badge-ud">UBICTUM DELIVERY</span></td>
+                                <td><span class="arq-badge" style="background:#616265;color:#fff;">CÁLCULO</span></td>
                                 <td><span class="arq-badge badge-ud">UBICTUM DELIVERY</span></td>
                                 <td><span class="arq-badge badge-ud">UBICTUM DELIVERY</span></td>
                             </tr>
                             <tr class="arq-row-campo">
                                 <th class="arq-rowlabel">Campo</th>
-                                <td>CDR</td>
-                                <td>TU</td>
-                                <td>Arribo de unidad a CDR</td>
+                                <td>Estatus</td>
+                                <td>CDR / TU's</td>
+                                <td>Arribo de unidad</td>
                                 <td>Inicio de Carga</td>
                                 <td>Fin de Carga</td>
                                 <td>Tiempo de Carga</td>
@@ -885,11 +939,12 @@
                             </tr>
                         </table>
                     </div>
+                    <p class="leg-note" style="margin-top:10px;"><strong>Iconos por horario:</strong> en Arribo Unidad → Documentos (excluye Tiempo de Carga), <span style="color:#27ae60;font-weight:800;">verde</span> si cumple el objetivo y <span style="color:#c9a300;font-weight:800;">amarillo</span> si no. En Salida, <span style="color:#27ae60;font-weight:800;">verde</span> si cumple y <span style="color:#c0392b;font-weight:800;">rojo</span> si no. <strong>Estatus:</strong> PROGRAMADO (sin datos), PROCESO (avanza cumpliendo, sin salida), EN RIESGO (algún atraso Arribo→Documentos), RETRASADO (concluyó sin cumplir salida), A TIEMPO (salida cumplida). El detalle completo de rangos e iconos está en la pantalla Resumen (3.3).</p>
                 </div>
 
                 <!-- Pantalla 4: Embarques / CDM > CDR -->
                 <div class="arq-card">
-                    <h3>4. Embarques / CDM &gt; CDR</h3>
+                    <h3>4. CDM &gt; CDR</h3>
                     <div class="arq-table-wrap">
                         <table class="arq-table">
                             <tr class="arq-row-data">
@@ -907,26 +962,27 @@
                                 <th class="arq-rowlabel">Campo</th>
                                 <td>CDM / Destino</td>
                                 <td>TU</td>
-                                <td>Surtido CDM</td>
+                                <td>Surtido</td>
                                 <td>Consolidado</td>
-                                <td>Embarque TU</td>
+                                <td>Carga</td>
                                 <td>Backlog</td>
-                                <td>Salida CDR</td>
-                                <td>Tránsito TU</td>
+                                <td>Salida</td>
+                                <td>Llegada</td>
                             </tr>
                             <tr class="arq-row-kpi">
                                 <th class="arq-rowlabel">KPI</th>
                                 <td>—</td>
-                                <td>1 a N TU + piezas del destino</td>
-                                <td>% Fill rate (sobre piezas surtidas) + tiempo + pzas</td>
-                                <td>% Embalado a HU Master (sobre piezas surtidas) + tiempo + pzas</td>
-                                <td>% Embarque TU (sobre piezas consolidadas) + tiempo + pzas</td>
-                                <td>% Stage Resguardo (sobre piezas consolidadas) + pzas</td>
+                                <td>1 a N TU por destino</td>
+                                <td>% Fill rate + tiempo</td>
+                                <td>% Embalado a HU Master + tiempo</td>
+                                <td>% Embarque a TU + tiempo</td>
+                                <td>% Stage Resguardo</td>
                                 <td>¿Salió a tiempo? (sí / no)</td>
                                 <td>¿Llegó a tiempo? (sí / no)</td>
                             </tr>
                         </table>
                     </div>
+                    <p class="leg-note" style="margin-top:10px;"><strong>Iconos por %:</strong> Surtido/Consolidado/Carga → <span style="color:#27ae60;font-weight:800;">100% verde</span>, 99–95% amarillo, 94–90% naranja, &lt;90% rojo. Backlog (0% óptimo) → <span style="color:#27ae60;font-weight:800;">0% verde</span>, 1–5% amarillo, 6–10% naranja, &gt;10% rojo. Salida/Llegada → <span style="color:#27ae60;font-weight:800;">verde</span> si cumple, <span style="color:#c0392b;font-weight:800;">rojo (tache)</span> si no. Detalle completo en Resumen (3.4).</p>
                 </div>
 
             </div>
@@ -1460,13 +1516,20 @@
 
         function toggleAutoPlay() {
             const btnAuto = document.getElementById('btn-auto');
-            if (autoPlay) {
+            const vaAPausar = btnAuto.innerText.indexOf('Pausar') !== -1; // está "corriendo" -> pausar
+            if (vaAPausar) {
                 clearInterval(carruselInterval);
+                if (tlTimer) { clearInterval(tlTimer); tlTimer = null; }          // pausa cambio de página en Timeline
+                if (tlFillTimer) { clearInterval(tlFillTimer); tlFillTimer = null; } // pausa el llenado dinámico
                 btnAuto.innerText = "▶ Reanudar Carrusel";
                 btnAuto.style.backgroundColor = "var(--alert-red)";
                 autoPlay = false;
             } else {
                 iniciarCarrusel();
+                programarTimeline();                                             // reanuda cambio de página
+                if (!tlFillTimer && tlGrupos.some(g => g.tus.some(f => f.prog < 5))) {
+                    tlFillTimer = setInterval(avanzarLlenado, 1500);             // reanuda llenado si no terminó
+                }
                 btnAuto.innerText = "⏸ Pausar Carrusel";
                 btnAuto.style.backgroundColor = "var(--success-green)";
                 autoPlay = true;
